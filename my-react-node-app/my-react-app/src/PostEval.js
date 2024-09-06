@@ -56,17 +56,17 @@ function ContentView() {
 
     function ButtonShare(btnIdx) {
         const [buttonText, setButtonText] = useState(' Share');
-        
+
 
 
         function handleClick() {
-            let copiedShopCart = {...shopCart};
+            let copiedShopCart = { ...shopCart };
 
             (buttonText === ' Share') ? setButtonText(' Unshare') : setButtonText(' Share');
             (buttonText === ' Share') ? copiedShopCart['posts'][btnIdx]['share'] = 1 : copiedShopCart['posts'][btnIdx]['share'] = 0;
-            setShopCart( shopCart => ({
+            setShopCart(shopCart => ({
                 ...copiedShopCart
-              }));
+            }));
             console.log(shopCart);
             console.log(btnIdx);
         }
@@ -84,52 +84,59 @@ function ContentView() {
     function RatingTrust() {
 
         if (visibleRT) {
-
-            return (<div>
-                <p>How trustworthy do you find this share?</p>
-                <Form>
-                    {['radio'].map((type) => (
-                        <div key={`inline-${type}`} className="mb-3">
-                            <Form.Check
-                                inline
-                                label="1"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-1`}
-                            />
-                            <Form.Check
-                                inline
-                                label="2"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-2`}
-                            />
-                            <Form.Check
-                                inline
-                                label="3"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-3`}
-                            />
-                            <Form.Check
-                                inline
-                                label="4"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-4`}
-                            />
-                            <Form.Check
-                                inline
-                                label="5"
-                                name="group1"
-                                type={type}
-                                id={`inline-${type}-5`}
-                            />
-                        </div>
-                    ))}
-                </Form>
+            return (<div className="d-flex justify-content-center" style={{ width: "100%" }}>
+                <div>
+                    <p>How trustworthy do you find this post with additional information?</p>
+                    <Form>
+                        {['radio'].map((type) => (
+                            <div key={`inline-${type}`} className="mb-3">
+                                <Form.Check
+                                    inline
+                                    label="1"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-1`}
+                                />
+                                <Form.Check
+                                    inline
+                                    label="2"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-2`}
+                                />
+                                <Form.Check
+                                    inline
+                                    label="3"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-3`}
+                                />
+                                <Form.Check
+                                    inline
+                                    label="4"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-4`}
+                                />
+                                <Form.Check
+                                    inline
+                                    label="5"
+                                    name="group1"
+                                    type={type}
+                                    id={`inline-${type}-5`}
+                                />
+                            </div>
+                        ))}
+                    </Form>
+                </div>
             </div>
-    
+            );
+        }
+        else {
+            return (
+                <div>
+                    
+            </div>
             );
         }
     }
@@ -219,7 +226,7 @@ function ContentView() {
     }
 
     function SetPost(data, cond, btnIdx) {
-        return(<div className=" border border-dark d-grid gap-3" style={{ alignItems: 'flex-start', paddingLeft: "2%", paddingTop: "2%", paddingBottom: "2%", paddingRight: "2%" }}>
+        return (<div className=" border border d-grid gap-3" style={{ alignItems: 'flex-start', paddingLeft: "2%", paddingTop: "2%", paddingBottom: "2%", paddingRight: "2%" }}>
             <div className="d-flex justify-content-center   " >
                 <div style={{ marginLeft: "1%" }}>
                     <p><i class="bi bi-person-circle" style={{ height: "40px", width: "40px", fontSize: 40 }}></i> </p>
@@ -237,9 +244,9 @@ function ContentView() {
                         {ButtonShare(btnIdx)}
                     </div>
                 </div>
-                <div className="d-flex justify-content-center" style={{ width: "100%" }}>
-                    {RatingTrust()}
-                </div>
+
+                {RatingTrust()}
+
             </div>
         </div>);
     }
@@ -247,17 +254,19 @@ function ContentView() {
     return (<div className='ml-1' style={{ marginLeft: "20%", marginRight: "20%", width: "60%", marginTop: "3%", fontSize: 20 }}>
         <h1>Timeline</h1>
         <div className="rounded-3 " style={{ marginTop: "2%", marginBottom: "2%" }}>
-            {SetPost(content_2, 0, 0)}
-            {SetPost(content_2, 1, 1)}
-            {SetPost(content_2, 2, 2)}
-            {SetPost(content_2, 3, 3)}
+            {SetPost(content, 0, 0)}
+            {SetPost(content, 1, 1)}
+            {SetPost(content, 2, 2)}
+            {SetPost(content, 3, 3)}
         </div>
-        
-        <button type="button" class="btn btn-primary  btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "100%" }} onClick={makeVisible}>
+        <div style={{ marginBottom: "3%"}}>
+            <button type="button" class="btn btn-outline-primary  btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "100%" }} onClick={makeVisible}>
             <p style={{ height: "300", marginBottom: "0", fontSize: "30px" }}>
-            make visible
+                Next Page >
             </p>
         </button>
+        </div>
+        
     </div>)
 
 }

@@ -64,8 +64,12 @@
     background-color: #0051a3;
   }
 
-  .share-1 {
+  .rating-show {
+    width: 100%;
+  }
 
+  .rating-hide {
+    width: 0%;
   }
 
   .share-2 {
