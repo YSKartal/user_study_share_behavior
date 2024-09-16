@@ -18,7 +18,8 @@ app.get('/api/data', (req, res) => {
 
 app.post('/register', jsonParser , function (req, res)  {
   
-  dt.writer(req.body.fname);
+  //dt.writer(req.body.fname);
+  dt.writer(JSON.stringify(req.body));
   res.json({
     status: 200,
     message: "Got a succesfull POST request and I can do another if I'd like"

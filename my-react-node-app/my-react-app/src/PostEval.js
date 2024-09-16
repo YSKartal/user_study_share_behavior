@@ -7,11 +7,21 @@ import './Content.css';
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import { mdata } from './data.js';
+import axios from 'axios';
 import { Button } from 'bootstrap';
 
 function ContentView() {
 
-    const lPostTzpes = [3, 3, 3, 3, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0, 0, 0]
+    const lPostOrder_1 = [10, 7, 3, 15, 5, 2, 12, 11, 8, 14, 4, 0, 1, 13, 6, 9]
+    const lPostTzpes_1 = [0, 3, 2, 1, 3, 2, 1, 0, 0, 1, 3, 2, 2, 1, 3, 0]
+    const lPostOrder_2 = [2, 14, 13, 6, 10, 3, 7, 9, 1, 4, 15, 11, 8, 12, 5, 0]
+    const lPostTzpes_2 = [3, 2, 2, 0, 1, 3, 0, 1, 3, 0, 2, 1, 1, 2, 0, 3]
+    const lPostOrder_3 = [2, 14, 13, 6, 10, 3, 7, 9, 1, 4, 15, 11, 8, 12, 5, 0]
+    const lPostTzpes_3 = [3, 2, 2, 0, 1, 3, 0, 1, 3, 0, 2, 1, 1, 2, 0, 3]
+    const lPostOrder_4 = [2, 14, 13, 6, 10, 3, 7, 9, 1, 4, 15, 11, 8, 12, 5, 0]
+    const lPostTzpes_4 = [3, 2, 2, 0, 1, 3, 0, 1, 3, 0, 2, 1, 1, 2, 0, 3]
+
+    const lUser = ['Mark', 'Tom', 'Suzan', 'Kevin', 'Martin', 'Hans', 'Clara', 'Isabella', 'Max', 'Angelina', 'Joseph', 'Lily', 'Emma', 'Sophia', 'Alice', 'James']
     const [shopCart, setShopCart] = useState({
         posts: [
             {
@@ -89,6 +99,12 @@ function ContentView() {
             }));
             console.log(shopCart);
             console.log(btnIdx);
+            axios.post('http://localhost:3001/register/', shopCart)
+                .then((response) => {
+                  console.log(response);
+                }, (error) => {
+                  console.log(error);
+                });
         }
 
 
@@ -125,7 +141,7 @@ function ContentView() {
 
 
         if (visibleRT) {
-            return (<div className="d-flex justify-content-center" style={{ width: "100%", marginLeft: "5%", marginTop: "5%", fontSize: "18px"}}>
+            return (<div className="d-flex justify-content-center" style={{ width: "100%", marginLeft: "5%", marginTop: "5%", fontSize: "18px" }}>
                 <div>
                     <p>How trustworthy do you find this post on a scale of 1 (lowest) to 5 (highest)?</p>
                     <Form>
@@ -262,13 +278,10 @@ function ContentView() {
                 return (AccordionMetadata(data));
             case 2:
                 return (<div>
-                    {AccordionMetadata(data)}
                     {AccordionPMention(data)}
                 </div>);
             case 3:
                 return (<div>
-                    {AccordionMetadata(data)}
-                    {AccordionPMention(data)}
                     {AccordionSummary(data)}
                 </div>);
             default:
@@ -282,11 +295,11 @@ function ContentView() {
                 <div style={{ marginLeft: "1%" }}>
                     <p><i class="bi bi-person-circle" style={{ height: "40px", width: "40px", fontSize: 40 }}></i> </p>
                 </div>
-                <div className="rounded-3 d-grid gap-3" style={{ paddingLeft: "1%", width: "150%", fontSize:"18px" }}>
-                    <p> <b>Max @max</b></p>
+                <div className="rounded-3 d-grid gap-3" style={{ paddingLeft: "1%", width: "150%", fontSize: "18px" }}>
+                    <p> <b>{lUser[btnIdx]} @{lUser[btnIdx]}</b></p>
                     <p>  {data.mainPost} <a href={data.mainURL}>{data.mainRURL}</a></p>
                     <div>
-                        {AccordionResp(content.replies)}
+                        {AccordionResp(data.replies)}
                     </div>
                     <div>
                         {SetCondition(cond, data)}
@@ -302,12 +315,25 @@ function ContentView() {
         </div>);
     }
 
+    function setOrder(ord, idx) {
+        switch (ord) {
+            case 1:
+                return SetPost(mdata.posts[lPostOrder_1[idx]], lPostTzpes_1[idx], idx);
+            case 2:
+                return SetPost(mdata.posts[lPostOrder_2[idx]], lPostTzpes_2[idx], idx);
+            case 3:
+                return SetPost(mdata.posts[lPostOrder_3[idx]], lPostTzpes_3[idx], idx);
+            case 4:
+                return SetPost(mdata.posts[lPostOrder_4[idx]], lPostTzpes_4[idx], idx);
+        }
+    }
+
     return (<div className='ml-1' style={{ marginLeft: "20%", marginRight: "20%", width: "60%", marginTop: "3%", fontSize: 20 }}>
         <h1>Timeline</h1>
         <div className="rounded-3 " style={{ marginTop: "2%", marginBottom: "2%" }}>
             <div>
                 {mdata.posts.map((item, index) => (
-                    SetPost(item, lPostTzpes[index], index)
+                    setOrder(2, index)
                 ))}
             </div>
 
