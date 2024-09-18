@@ -327,3 +327,38 @@ I’ve heard people say the unvaxed deserve to die. But we were Faucied by “I 
 than discriminatory attitudes directed towards other common and
 diverse targets of prejudice including immigrants, drug-addicts and
 ex-convicts. ' (Page 7)
+
+
+
+(base) kartalym@gesis.intra@svko-vadis:/etc/nginx/conf.d$ node -v
+v10.19.0
+
+
+sudo apt install --reinstall command-not-found
+ 1298  firewall-cmd --state
+ 1299  sudo firewall-cmd --state
+ 1300  firewall-cmd --list-all
+ 1301  sudo firewall-cmd --list-all
+ 1302  sudo firewall-cmd --zone=public --add-port=8082/tcp --permanent
+ 1303  sudo firewall-cmd --reload
+ 1304  sudo firewall-cmd --list-all
+ 1305  sudo firewall-cmd --list-ports
+ 1306  sudo cd  /etc/firewalld/
+ 1307  cd  /etc/firewalld/
+ 1308  sudo firewall-cmd --state
+ 1309  sudo firewall-cmd --list-all
+ 1310  sudo firewall-cmd --list-ports
+ 1311  sudo firewall-cmd --get-default-zone
+ 1312  sudo firewall-cmd --get-services
+ 1313  sudo firewall-cmd --add-service=https --permanent
+ 1314  sudo firewall-cmd --reload
+ 1315  sudo firewall-cmd --zone=public --add-port=5000/tcp --permanent
+ 1316  sudo firewall-cmd --zone=public --add-port=80820/tcp --permanent
+ 1317  sudo firewall-cmd --zone=public --add-port=8082/tcp --permanent
+ 1318  firewall-cmd --reload
+ 1319  sudo firewall-cmd --reload
+ 1320  sudo firewall-cmd --get-active-zones
+ 1321  sudo less /etc/apache2/conf-available/javascript-common.conf
+ 1322  sudo less /etc/nginx/nginx.conf
+ 1323  sudo less /etc/nginx/conf.d/
+ 1324  sudo less /etc/nginx/conf.d/demo-vadis.gesis.org.conf

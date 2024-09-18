@@ -7,6 +7,8 @@ import ContentView  from './PostEval';
 
 function App() {
   const [data, setData] = useState('');
+  const queryParameters = new URLSearchParams(window.location.search)
+  const order = queryParameters.get("order")
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/data')
@@ -37,12 +39,10 @@ function App() {
 
   return (
     <div className="App">
-      
-      <p>server connection: {data}</p>
       <div>
-        
-        <ContentView />
+        <ContentView order={order}/>
       </div>
+      <p>server connection: {data} for {order}</p>
     </div>
   );
 }
