@@ -10,9 +10,18 @@ import { mdata } from './data.js';
 import axios from 'axios';
 import { Button } from 'bootstrap';
 import Alert from 'react-bootstrap/Alert';
+import pp_1 from './assets/images/pp_1.jpg';
+import pp_2 from './assets/images/pp_2.jpg';
+import pp_3 from './assets/images/pp_3.jpg';
+import pp_4 from './assets/images/pp_4.jpg';
+import pp_5 from './assets/images/pp_5.jpg';
+import pp_6 from './assets/images/pp_6.jpg';
+import pp_7 from './assets/images/pp_7.jpg';
+import pp_8 from './assets/images/pp_8.jpg';
 
 function ContentView({order}) {
 
+    
     var mainOrd = 1;
     if (order==2) {
         mainOrd = 2;
@@ -24,16 +33,26 @@ function ContentView({order}) {
         mainOrd = 4;
     }
 
-    const lPostOrder_1 = [10, 7, 3, 15, 5, 2, 12, 11, 8, 14, 4, 0, 1, 13, 6, 9]
-    const lPostTzpes_1 = [2,  3, 3, 3,  1, 2,  0,  3, 0, 2, 0, 0, 1, 1, 2, 1]
-    const lPostOrder_2 = [2, 14, 13, 6, 10, 3, 7, 9, 1, 4, 15, 11, 8, 12, 5, 0]
-    const lPostTzpes_2 = [1,  1,  0, 1,  1, 2, 2, 0, 0, 3,  2,  2, 3, 3,  0, 3]
-    const lPostOrder_3 = [14, 9, 10, 3, 0, 12, 6, 13, 5, 7, 15, 1, 11, 4, 8, 2]
-    const lPostTzpes_3 = [0,  3, 0, 1, 2,  2,  0, 3, 3,  1, 1,  3, 1, 2, 2, 0]
-    const lPostOrder_4 = [12, 2, 14, 3, 5, 13, 8, 9, 6, 11, 7, 0, 1, 10, 4, 15]
-    const lPostTzpes_4 = [1,  3,  3,  0, 2, 2, 1, 2, 3, 0,  0, 1, 2, 3, 1, 0]
+    const _lPostOrder_1 = [10, 7, 3, 15, 5, 2, 12, 11, 8, 14, 4, 0, 1, 13, 6, 9]
+    const _lPostTzpes_1 = [2,  3, 3, 3,  1, 2,  0,  3, 0, 2, 0, 0, 1, 1, 2, 1]
+    const lPostOrder_1 = [7, 3, 5, 2, 4, 0, 1, 6]
+    const lPostTzpes_1 = [1, 1, 1, 1, 1, 1, 1, 1]
+    const _lPostOrder_2 = [2, 14, 13, 6, 10, 3, 7, 9, 1, 4, 15, 11, 8, 12, 5, 0]
+    const _lPostTzpes_2 = [1,  1,  0, 1,  1, 2, 2, 0, 0, 3,  2,  2, 3, 3,  0, 3]
+    const lPostOrder_2 = [2, 6, 3, 7, 1, 4, 5, 0]
+    const lPostTzpes_2 = [2, 2, 2, 2, 2, 2, 2, 2]
+    const _lPostOrder_3 = [14, 9, 10, 3, 0, 12, 6, 13, 5, 7, 15, 1, 11, 4, 8, 2]
+    const _lPostTzpes_3 = [0,  3, 0, 1, 2,  2,  0, 3, 3,  1, 1,  3, 1, 2, 2, 0]
+    const lPostOrder_3 = [3, 0, 6, 5, 7, 1, 4, 2]
+    const lPostTzpes_3 = [3, 3, 3, 3, 3, 3, 3, 3]
+    const _lPostOrder_4 = [12, 2, 14, 3, 5, 13, 8, 9, 6, 11, 7, 0, 1, 10, 4, 15]
+    const _lPostTzpes_4 = [1,  3,  3,  0, 2, 2, 1, 2, 3, 0,  0, 1, 2, 3, 1, 0]
+    const lPostOrder_4 = [2, 3, 5, 6, 7, 0, 1, 4]
+    const lPostTzpes_4 = [0, 0, 0, 0, 0, 0, 0, 0]
 
-    const lUser = ['Mark', 'Tom', 'Suzan', 'Kevin', 'Martin', 'Hans', 'Clara', 'Isabella', 'Max', 'Angelina', 'Joseph', 'Lily', 'Emma', 'Sophia', 'Alice', 'James']
+    const lImages = [ pp_5, pp_6, pp_1, pp_7,  pp_2, pp_3, pp_8, pp_4]
+    //const lUser = ['Mark', 'Tom', 'Suzan', 'Kevin', 'Martin', 'Hans', 'Clara', 'Isabella', 'Max', 'Angelina', 'Joseph', 'Lily', 'Emma', 'Sophia', 'Alice', 'James']
+    const lUser = ['Mark', 'Tom', 'Suzan', 'Kevin','Lily', 'Emma',  'Martin', 'Isabella',  'Hans', 'Clara', 'Max', 'Angelina', 'Joseph', 'Sophia', 'Alice', 'James']
     const [shopCart, setShopCart] = useState({
         posts: [
             {
@@ -191,13 +210,13 @@ function ContentView({order}) {
             return (<p></p>)
         }
         else if (value > 3) {
-            return (<p>Please briefly describe why you trust this post?</p>)
+            return (<p>Please briefly describe why you trust this post.</p>)
         }
         else if (value < 3) {
-            return (<p>Please briefly describe why you distrust this post?</p>)
+            return (<p>Please briefly describe why you distrust this post.</p>)
         }
         else {
-            return (<p>Please briefly explain why you neither trust nor distrust this article?</p>)
+            return (<p>Please briefly explain why you neither trust nor distrust this article.</p>)
         }
     }
 
@@ -329,7 +348,7 @@ function ContentView({order}) {
     function AccordionMetadata(data) {
         return (<Accordion alwaysOpen>
             <Accordion.Item eventKey="0">
-                <Accordion.Header>More Information about the Publication</Accordion.Header>
+                <Accordion.Header>More information about the cited publication</Accordion.Header>
                 <Accordion.Body>
                     <div className="rounded-3" >
                         <p> <b>Title:</b> {data.mainTitle} </p>
@@ -345,7 +364,7 @@ function ContentView({order}) {
     function AccordionPMention(data) {
         return (<Accordion alwaysOpen>
             <Accordion.Item eventKey="1">
-                <Accordion.Header>Short Evidence in the Publication</Accordion.Header>
+                <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
                 <Accordion.Body>
                     <p>  {data.mentionInPaper} </p>
                 </Accordion.Body>
@@ -356,7 +375,7 @@ function ContentView({order}) {
     function AccordionSummary(data) {
         return (<Accordion alwaysOpen>
             <Accordion.Item eventKey="2">
-                <Accordion.Header>Short AI-Generated Summary of the Publication</Accordion.Header>
+                <Accordion.Header>Short AI-generated summary of the cited publication</Accordion.Header>
                 <Accordion.Body>
                     <p> {data.extSummaryMention} </p>
                 </Accordion.Body>
@@ -382,10 +401,15 @@ function ContentView({order}) {
     }
 
     function SetPost(data, cond, btnIdx) {
+
+        var idxplus = btnIdx + 1;
+        const path = './assets/images/pp_' + idxplus +'.jpg';
+        console.log(path);
         return (<div className=" border border d-grid gap-3" style={{ alignItems: 'flex-start', paddingLeft: "2%", paddingTop: "2%", paddingBottom: "2%", paddingRight: "2%" }}>
             <div className="d-flex justify-content-center   " >
                 <div style={{ marginLeft: "1%" }}>
-                    <p><i class="bi bi-person-circle" style={{ height: "40px", width: "40px", fontSize: 40 }}></i> </p>
+
+                    <p><img className="circular-image" src={lImages[btnIdx]} alt="Logo" style={{ height: "60px", width: "60px", borderRadius: "50%", overflow: "hidden", fontSize: 50 }} /> </p>
                 </div>
                 <div className="rounded-3 d-grid gap-3" style={{ paddingLeft: "1%", width: "150%", fontSize: "18px" }}>
                     <p> <b>{lUser[btnIdx]} @{lUser[btnIdx]}</b></p>
@@ -408,6 +432,7 @@ function ContentView({order}) {
     }
 
     function setOrder(ord, idx) {
+        console.log(idx);
         switch (ord) {
             case 1:
                 return SetPost(mdata.posts[lPostOrder_1[idx]], lPostTzpes_1[idx], idx);
@@ -425,6 +450,7 @@ function ContentView({order}) {
         <div className="rounded-3 " style={{ marginTop: "2%", marginBottom: "2%" }}>
             <div>
                 {mdata.posts.map((item, index) => (
+                    
                     setOrder(mainOrd, index)
                 ))}
             </div>
