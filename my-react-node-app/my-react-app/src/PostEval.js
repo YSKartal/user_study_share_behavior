@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'reactjs-popup/dist/index.css';
+import Popup from 'react-popup';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './popup.css';
 import React, { useState } from 'react';
@@ -7,6 +8,7 @@ import './Content.css';
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import { mdata } from './data.js';
+import { names } from './names.js';
 import axios from 'axios';
 import { Button } from 'bootstrap';
 import Alert from 'react-bootstrap/Alert';
@@ -20,7 +22,6 @@ import pp_7 from './assets/images/pp_7.jpg';
 import pp_8 from './assets/images/pp_8.jpg';
 
 function ContentView({order}) {
-
     
     var mainOrd = 1;
     if (order==2) {
@@ -53,40 +54,19 @@ function ContentView({order}) {
     const lImages = [ pp_5, pp_6, pp_1, pp_7,  pp_2, pp_3, pp_8, pp_4]
     //const lUser = ['Mark', 'Tom', 'Suzan', 'Kevin', 'Martin', 'Hans', 'Clara', 'Isabella', 'Max', 'Angelina', 'Joseph', 'Lily', 'Emma', 'Sophia', 'Alice', 'James']
     const lUser = ['Mark', 'Tom', 'Suzan', 'Kevin','Lily', 'Emma',  'Martin', 'Isabella',  'Hans', 'Clara', 'Max', 'Angelina', 'Joseph', 'Sophia', 'Alice', 'James']
+    const lReplyIdx = [
+        [223, 122, 117],
+        [1, 206, 286],
+        [268, 9, 178],
+        [263, 174, 116],
+        [224, 106, 46],
+        [236, 29, 108],
+        [198, 119, 65],
+        [136, 278, 239]
+       ];
+
     const [shopCart, setShopCart] = useState({
         posts: [
-            {
-                share: 0,
-                trustRank: 0
-            },
-            {
-                share: 0,
-                trustRank: 0
-            },
-            {
-                share: 0,
-                trustRank: 0
-            },
-            {
-                share: 0,
-                trustRank: 0
-            },
-            {
-                share: 0,
-                trustRank: 0
-            },
-            {
-                share: 0,
-                trustRank: 0
-            },
-            {
-                share: 0,
-                trustRank: 0
-            },
-            {
-                share: 0,
-                trustRank: 0
-            },
             {
                 share: 0,
                 trustRank: 0
@@ -126,6 +106,7 @@ function ContentView({order}) {
 
     const [onClickHandler, setOnClickHandler] = useState(() => firstFunction);
     function firstFunction() {
+        alert('Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.')
         window.scrollTo(0, 0);
         setVisibleRT(true);
         changeHandler();
@@ -319,8 +300,8 @@ function ContentView({order}) {
         }
     }
 
-    function AccordionResp(responses) {
-        return (<Accordion alwaysOpen>
+    function AccordionResp(responses, postIdx) {
+        return (<Accordion >
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Show Responses</Accordion.Header>
                 <Accordion.Body>
@@ -332,7 +313,7 @@ function ContentView({order}) {
 
                                 </div>
                                 <div style={{ paddingLeft: "1%", paddingRight: "1%" }}>
-                                    <p> <b>Mark @mark</b></p>
+                                    <p> <b>{names[lReplyIdx[postIdx][index]]} @{names[lReplyIdx[postIdx][index]]}</b></p>
                                     <p>  {item}</p>
 
                                 </div>
@@ -413,9 +394,9 @@ function ContentView({order}) {
                 </div>
                 <div className="rounded-3 d-grid gap-3" style={{ paddingLeft: "1%", width: "150%", fontSize: "18px" }}>
                     <p> <b>{lUser[btnIdx]} @{lUser[btnIdx]}</b></p>
-                    <p>  {data.mainPost} <a href={data.mainURL}>{data.mainRURL}</a></p>
+                    <p>  {data.mainPost} <a href={data.mainURL} target="_blank">{data.mainRURL}</a></p>
                     <div>
-                        {AccordionResp(data.replies)}
+                        {AccordionResp(data.replies, btnIdx)}
                     </div>
                     <div>
                         {SetCondition(cond, data)}
@@ -446,6 +427,13 @@ function ContentView({order}) {
     }
 
     return (<div className='ml-1' style={{ marginLeft: "20%", marginRight: "20%", width: "60%", marginTop: "3%", fontSize: 20 }}>
+        <p><b>Please read the following instruction carefully!</b></p>
+        <p>Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline. For each post, please decide whether or not you would like to <b>share</b> them with your circle.</p>
+        <hr class="hr" />
+        <div style={visibleRT ? {} : { display: 'none' }}>
+            <p>Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.</p>
+            <hr class="hr" />
+        </div>
         <h1>Timeline {order}</h1>
         <div className="rounded-3 " style={{ marginTop: "2%", marginBottom: "2%" }}>
             <div>

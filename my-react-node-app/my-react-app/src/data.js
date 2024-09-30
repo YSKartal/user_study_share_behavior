@@ -2,7 +2,7 @@ const mdata = {
     posts: [{
         title: "Post 1",
         mainPost: "A Cochrane review is considered the highest level of scientific evidence becauae it evaluates and scores all existing studies on a particular scientific topic. The masks don't make a difference but handwriting all by itself decreased infections by 1/3. ",
-        mainURL: "",
+        mainURL: "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD006207.pub6/full",
         publishDate: "30 January 2023 ",
         mainRURL: "https://t.co/C0XnR8RO3V",
         mainTitle: "Physical interventions to interrupt or reduce the spread of respiratory viruses",
@@ -16,7 +16,7 @@ const mdata = {
     {
         title: "Post 2",
         mainPost: "I’ve often heard it claimed that covid causes myocarditis. A large population-based study finds that it doesn’t.",
-        mainURL: "",
+        mainURL: "https://www.mdpi.com/2077-0383/11/8/2219",
         mainRURL: "https://mdpi.com/2077-0383/11/8/2219",
         mainTitle: "The Incidence of Myocarditis and Pericarditis in Post COVID-19 Unvaccinated Patients—A Large Population-Based Study",
         mainAbs: "Background: The first COVID-19 vaccine outside a clinical trial setting was administered on Dec 8, 2020. To ensure global vaccine equity, vaccine targets were set by the COVID-19 Vaccines Global Access (COVAX) Facility and WHO. However, due to vaccine shortfalls, these targets were not achieved by the end of 2021. We aimed to quantify the global impact of the first year of COVID-19 vaccination programmes. Methods: A mathematical model of COVID-19 transmission and vaccination was separately fit to reported COVID-19 mortality and all-cause excess mortality in 185 countries and territories. The impact of COVID-19 vaccination programmes was determined by estimating the additional lives lost if no vaccines had been distributed. We also estimated the additional deaths that would have been averted had the vaccination coverage targets of 20% set by COVAX and 40% set by WHO been achieved by the end of 2021. Findings:  Based on official reported COVID-19 deaths, we estimated that vaccinations prevented 14·4 million (95% credible interval [Crl] 13·7–15·9) deaths from COVID-19 in 185 countries and territories between Dec 8, 2020, and Dec 8, 2021. This estimate rose to 19·8 million (95% Crl 19·1–20·4) deaths from COVID-19 averted when we used excess deaths as an estimate of the true extent of the pandemic, representing a global reduction of 63% in total deaths (19·8 million of 31·4 million) during the first year of COVID-19 vaccination. In COVAX Advance Market Commitment countries, we estimated that 41% of excess mortality (7·4 million [95% Crl 6·8–7·7] of 17·9 million deaths) was averted. In low-income countries, we estimated that an additional 45% (95% CrI 42–49) of deaths could have been averted had the 20% vaccination coverage target set by COVAX been met by each country, and that an additional 111% (105–118) of deaths could have been averted had the 40% target set by WHO been met by each country by the end of 2021. Interpretation: COVID-19 vaccination has substantially altered the course of the pandemic, saving tens of millions of lives globally. However, inadequate access to vaccines in low-income countries has limited the impact in these settings, reinforcing the need for global vaccine equity and coverage.",
