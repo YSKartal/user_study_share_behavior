@@ -43,7 +43,7 @@ function App() {
       <div>
         <ContentView order={order} uid={uid} ct={caseToken}/>
       </div>
-      <p>server connection: {data} for {order}</p>
+      
     </div>
   );
 }

@@ -20,9 +20,9 @@ import pp_8 from './assets/images/pp_8.jpg';
 
 function ContentView({ order, uid, ct}) {
 
-    const tempURL = 'http://localhost:3001/register/';
+    const tempURL = 'https://localhost:3001/register/';
 
-    const redirectUrl = 'https://www.soscisurvey.de/user-study/index.php?i=' + ct;
+    const redirectUrl = 'https://www.soscisurvey.de/user-study-smsi-trust/index.php?i=' + ct;
 
     var mainOrd = 1;
     if (order==2) {
