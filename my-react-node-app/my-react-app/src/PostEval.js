@@ -20,6 +20,8 @@ import pp_8 from './assets/images/pp_8.jpg';
 
 function ContentView({ order, uid, ct}) {
 
+    const tempURL = 'http://localhost:3001/register/';
+
     const redirectUrl = 'https://www.soscisurvey.de/user-study/index.php?i=' + ct;
 
     var mainOrd = 1;
@@ -102,7 +104,7 @@ function ContentView({ order, uid, ct}) {
     });
 
     function sendMessage(message) {
-        axios.post(process.env.REACT_APP_NODE_URL_R, message)
+        axios.post(tempURL, message)
             .then((response) => {
                 console.log(response);
             }, (error) => {
