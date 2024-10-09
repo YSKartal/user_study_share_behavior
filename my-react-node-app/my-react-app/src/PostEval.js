@@ -17,6 +17,7 @@ import pp_5 from './assets/images/pp_5.jpg';
 import pp_6 from './assets/images/pp_6.jpg';
 import pp_7 from './assets/images/pp_7.jpg';
 import pp_8 from './assets/images/pp_8.jpg';
+import Button from 'react-bootstrap/Button';
 
 function ContentView({ order, uid, ct}) {
 
@@ -189,7 +190,7 @@ function ContentView({ order, uid, ct}) {
         }
 
 
-        return (<button type="nbutton" disabled={visibleRT} data-bs-toggle="button" className="btn btn-outline-primary  btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "35%" }} onClick={handleClick}>
+        return (<button type="button" disabled={visibleRT} data-bs-toggle="button" className="btn btn-outline-primary btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "35%" }} onClick={handleClick}>
             <p style={{ height: "300", marginBottom: "0", fontSize: "23px" }}>
                 <svg id='rt-icon' style={{ height: "30px", width: "30px", fill: "#0d6efd" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M272 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-112 0c-17.7 0-32-14.3-32-32l0-128 32 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l32 0 0 128c0 53 43 96 96 96l112 0zM304 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l112 0c17.7 0 32 14.3 32 32l0 128-32 0c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8l-32 0 0-128c0-53-43-96-96-96L304 96z" /></svg>
                 {buttonText}
@@ -478,7 +479,7 @@ function ContentView({ order, uid, ct}) {
         }
     }
 
-    const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline. For each post, please decide whether or not you would like to <b>share</b> them with your circle.";
+    const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline.";
     const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.";
 
     return (<div className='ml-1' style={{ marginLeft: "20%", marginRight: "20%", width: "60%", marginTop: "3%", fontSize: 20 }}>
@@ -486,6 +487,7 @@ function ContentView({ order, uid, ct}) {
 
             <p  ><b>Please read the following instruction carefully!</b></p>
             <p>{visibleRT ? instr_2 : instr_1}</p>
+            <p><b>{visibleRT ? '' : 'For each post, please decide whether or not you would like to share them with your circle.'}</b></p>
         </div>
         <hr className="hr" />
 
