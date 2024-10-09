@@ -106,7 +106,7 @@ function ContentView({ order, uid, ct}) {
     });
 
     function sendMessage(message) {
-        axios.post('http://localhost:3001/register/', message)
+        axios.post(process.env.REACT_APP_NODE_URL_R, message)
             .then((response) => {
                 console.log(response);
             }, (error) => {

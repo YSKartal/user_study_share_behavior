@@ -12,7 +12,7 @@ function App() {
   const uid = uuidv4()
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/data')
+    axios.get(process.env.REACT_APP_NODE_URL_A)
       .then(response => {
         setData(response.data.message);
       })
@@ -23,7 +23,7 @@ function App() {
 
 
   useEffect(() => {
-    axios.post('http://localhost:3001/register/', {
+    axios.post(process.env.REACT_APP_NODE_URL_R, {
       fname: 'Finn',
       lastName: 'Williams'
     })
