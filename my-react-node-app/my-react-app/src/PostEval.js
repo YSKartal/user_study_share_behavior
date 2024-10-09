@@ -23,19 +23,15 @@ function ContentView({ order, uid, ct}) {
     const redirectUrl = 'https://www.soscisurvey.de/user-study/index.php?i=' + ct;
 
     var mainOrd = 1;
-    switch (order) {
-        case 2:
-            mainOrd = 2;
-            break;
-        case 3:
-            mainOrd = 3;
-            break;
-        case 4:
-            mainOrd = 4;
-            break;
-        default:
-            mainOrd = 1;
-    };
+    if (order==2) {
+        mainOrd = 2;
+    }
+    if (order==3) {
+        mainOrd = 3;
+    }
+    if (order==4) {
+        mainOrd = 4;
+    }
 
     const lPostOrder_1 = [7, 3, 5, 2, 4, 0, 1, 6]
     const lPostTzpes_1 = [1, 1, 1, 1, 1, 1, 1, 1]
