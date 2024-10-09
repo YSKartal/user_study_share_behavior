@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ListGroup from './ListGruoup';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import ContentView  from './PostEval';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [data, setData] = useState('');
   const queryParameters = new URLSearchParams(window.location.search)
   const order = queryParameters.get("order")
+  const caseToken = queryParameters.get("caseToken")
+  const uid = uuidv4()
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/data')
@@ -40,7 +41,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <ContentView order={order}/>
+        <ContentView order={order} uid={uid} ct={caseToken}/>
       </div>
       <p>server connection: {data} for {order}</p>
     </div>
