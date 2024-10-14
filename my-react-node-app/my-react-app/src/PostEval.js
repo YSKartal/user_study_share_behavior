@@ -19,20 +19,41 @@ import pp_7 from './assets/images/pp_7.jpg';
 import pp_8 from './assets/images/pp_8.jpg';
 import Button from 'react-bootstrap/Button';
 
-function ContentView({ order, uid, ct}) {
+const tempURL = process.env.REACT_APP_NODE_URL_R;
+function sendMessage(tempURL, message) {
+    axios.post(tempURL, message)
+        .then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
+}
 
-    const tempURL = 'https://localhost:3001/register/';
+function begin(uid) {
+    sendMessage(tempURL, { 'type': 'begin', 'uid': uid });
+    
+};
+
+function ContentView({ order, uid, ct }) {
+
+    // const tempURL = 'https://localhost:3001/register/';
 
     const redirectUrl = 'https://www.soscisurvey.de/user-study-smsi-trust/index.php?i=' + ct;
 
+    const [init, setInit] = useState(true);
+    if (init) {
+        sendMessage({ 'type': 'begin', 'uid': uid });
+        setInit(false);
+    }
+
     var mainOrd = 1;
-    if (order==2) {
+    if (order === 2) {
         mainOrd = 2;
     }
-    if (order==3) {
+    if (order === 3) {
         mainOrd = 3;
     }
-    if (order==4) {
+    if (order === 4) {
         mainOrd = 4;
     }
 
@@ -117,6 +138,7 @@ function ContentView({ order, uid, ct}) {
 
     const [onClickHandler, setOnClickHandler] = useState(() => firstFunction);
     function firstFunction() {
+        sendMessage({ 'type': 'next_page', 'uid': uid });
         alert('Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.')
         window.scrollTo(0, 0);
         setVisibleRT(true);
@@ -149,11 +171,13 @@ function ContentView({ order, uid, ct}) {
                 break;
             }
         }
-        if (done===false){
+        if (done === false) {
             alert("Please provide a trustworthy ranking for all posts!");
         }
         else {
-            sendMessage(copiedShopCart);
+            sendMessage({ 'type': 'result', 'uid': uid, 'data': copiedShopCart });
+            sendMessage({ 'type': 'end', 'uid': uid });
+            // sendMessage(copiedShopCart);
             window.location.replace(redirectUrl);
 
         }
@@ -332,7 +356,8 @@ function ContentView({ order, uid, ct}) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            console.log(postIdx, ekey, uid);
+            console.log(postIdx, 'response', ekey, uid);
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'response', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
 
@@ -364,7 +389,7 @@ function ContentView({ order, uid, ct}) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            console.log(postIdx, 'md', ekey, uid);
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'metadata', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
 
@@ -387,7 +412,7 @@ function ContentView({ order, uid, ct}) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            console.log(postIdx, 'pm', ekey, uid);
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'mention', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
 
@@ -405,7 +430,7 @@ function ContentView({ order, uid, ct}) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            console.log(postIdx, 'ais', ekey, uid);
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'ai_sum', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
 

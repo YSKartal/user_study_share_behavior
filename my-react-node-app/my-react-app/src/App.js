@@ -11,7 +11,9 @@ function App() {
   const caseToken = queryParameters.get("caseToken")
   const uid = uuidv4()
 
-  useEffect(() => {
+  console.log(process.env.REACT_APP_NODE_URL_R)
+
+  /* useEffect(() => {
     axios.get(process.env.REACT_APP_NODE_URL_A)
       .then(response => {
         setData(response.data.message);
@@ -19,10 +21,10 @@ function App() {
       .catch(error => {
         console.error(error);
       });
-  }, []);
+  }, []); */
 
 
-  useEffect(() => {
+  /* useEffect(() => {
     axios.post(process.env.REACT_APP_NODE_URL_R, {
       fname: 'Finn',
       lastName: 'Williams'
@@ -32,7 +34,7 @@ function App() {
       }, (error) => {
         console.log(error);
       });
-  }, []);
+  }, []); */
 
 
 
