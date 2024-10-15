@@ -18,6 +18,7 @@ import pp_6 from './assets/images/pp_6.jpg';
 import pp_7 from './assets/images/pp_7.jpg';
 import pp_8 from './assets/images/pp_8.jpg';
 import Button from 'react-bootstrap/Button';
+import Swal from 'sweetalert2';
 
 const tempURL = process.env.REACT_APP_NODE_URL_R;
 function sendMessage(tempURL, message) {
@@ -31,7 +32,7 @@ function sendMessage(tempURL, message) {
 
 function begin(uid) {
     sendMessage(tempURL, { 'type': 'begin', 'uid': uid });
-    
+
 };
 
 function ContentView({ order, uid, ct }) {
@@ -47,13 +48,13 @@ function ContentView({ order, uid, ct }) {
     }
 
     var mainOrd = 1;
-    if (order === 2) {
+    if (order == '2') {
         mainOrd = 2;
     }
-    if (order === 3) {
+    if (order === '3') {
         mainOrd = 3;
     }
-    if (order === 4) {
+    if (order == '4') {
         mainOrd = 4;
     }
 
@@ -139,8 +140,15 @@ function ContentView({ order, uid, ct }) {
     const [onClickHandler, setOnClickHandler] = useState(() => firstFunction);
     function firstFunction() {
         sendMessage({ 'type': 'next_page', 'uid': uid });
-        alert('Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.')
+
+        Swal.fire({
+            'text': 'Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.',
+            didClose: () => window.scrollTo(0, 0)
+        }).then((result) => {
+            window.scrollTo(0, 0);
+        });
         window.scrollTo(0, 0);
+        //alert('Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.')
         setVisibleRT(true);
         changeHandler();
     }
@@ -172,7 +180,13 @@ function ContentView({ order, uid, ct }) {
             }
         }
         if (done === false) {
-            alert("Please provide a trustworthy ranking for all posts!");
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please provide a trustworthy rating for all posts!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+            //alert("Please provide a trustworthy rating for all posts!");
         }
         else {
             sendMessage({ 'type': 'result', 'uid': uid, 'data': copiedShopCart });
