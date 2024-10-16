@@ -444,3 +444,11 @@ Sun Oct 06 2024 15:08:03 GMT+0200 (Central European Summer Time) - {"posts":[{"s
 15/10/2024, 09:21:38 - {"type":"begin","uid":"2e84f84d-9287-4554-b6e9-45f3bd38c9a8"}
 15/10/2024, 09:21:38 - {"type":"begin","uid":"2e84f84d-9287-4554-b6e9-45f3bd38c9a8"}
 15/10/2024, 09:21:40 - {"type":"next_page","uid":"2e84f84d-9287-4554-b6e9-45f3bd38c9a8"}
+16/10/2024, 11:10:43 - {"type":"begin","uid":"6b223f4d-dc5b-4d70-8097-069b3c46b336"}
+16/10/2024, 11:10:43 - {"type":"begin","uid":"6b223f4d-dc5b-4d70-8097-069b3c46b336"}
+16/10/2024, 11:10:45 - {"posts":[{"share":0,"trustRank":0,"trustText":""},{"share":1,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""}]}
+16/10/2024, 11:10:47 - {"posts":[{"share":0,"trustRank":0,"trustText":""},{"share":1,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":1,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""}]}
+16/10/2024, 11:10:49 - {"posts":[{"share":0,"trustRank":0,"trustText":""},{"share":1,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":1,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""},{"share":1,"trustRank":0,"trustText":""},{"share":0,"trustRank":0,"trustText":""}]}
+16/10/2024, 11:10:51 - {"type":"next_page","uid":"6b223f4d-dc5b-4d70-8097-069b3c46b336"}
+16/10/2024, 11:11:18 - {"type":"end","uid":"6b223f4d-dc5b-4d70-8097-069b3c46b336"}
+16/10/2024, 11:11:18 - {"type":"result","uid":"6b223f4d-dc5b-4d70-8097-069b3c46b336","data":{"posts":[{"share":0,"trustRank":1,"trustText":""},{"share":1,"trustRank":3,"trustText":""},{"share":0,"trustRank":1,"trustText":""},{"share":0,"trustRank":1,"trustText":""},{"share":1,"trustRank":1,"trustText":"svgfbf"},{"share":0,"trustRank":4,"trustText":""},{"share":1,"trustRank":3,"trustText":""},{"share":0,"trustRank":1,"trustText":"dfgb"}]}}
