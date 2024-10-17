@@ -145,13 +145,13 @@ function ContentView({ order, uid, ct }) {
         sendMessage({ 'type': 'next_page', 'uid': uid });
 
         Swal.fire({
-            'text': 'Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.',
+            'text': 'Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.',
             didClose: () => window.scrollTo(0, 0)
         }).then((result) => {
             window.scrollTo(0, 0);
         });
         window.scrollTo(0, 0);
-        //alert('Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.')
+        //alert('Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.')
         setVisibleRT(true);
         changeHandler();
     }
@@ -530,7 +530,7 @@ function ContentView({ order, uid, ct }) {
     }
 
     const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline.";
-    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy do you find them. Please justify your judgement with a few sentences in the open text box.";
+    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.";
 
     return (<div className='ml-1' style={{ marginLeft: "20%", marginRight: "20%", width: "60%", marginTop: "3%", fontSize: 20 }}>
         <div style={{ padding: "2%", borderStyle: "solid", borderRadius: 10, borderColor: "red", borderWidth: "medium" }}>
