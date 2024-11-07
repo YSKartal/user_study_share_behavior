@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'reactjs-popup/dist/index.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './popup.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Content.css';
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
@@ -17,6 +17,32 @@ import pp_5 from './assets/images/pp_5.jpg';
 import pp_6 from './assets/images/pp_6.jpg';
 import pp_7 from './assets/images/pp_7.jpg';
 import pp_8 from './assets/images/pp_8.jpg';
+import w_1 from './assets/images/w_1.jpg';
+import w_2 from './assets/images/w_2.jpg';
+import w_3 from './assets/images/w_3.jpg';
+import w_4 from './assets/images/w_4.jpg';
+import w_5 from './assets/images/w_5.jpg';
+import w_6 from './assets/images/w_6.jpg';
+import w_7 from './assets/images/w_7.jpg';
+import w_8 from './assets/images/w_8.jpg';
+import w_9 from './assets/images/w_9.jpg';
+import w_10 from './assets/images/w_10.jpg';
+import w_11 from './assets/images/w_11.jpg';
+import w_12 from './assets/images/w_12.jpg';
+import m_1 from './assets/images/m_1.jpg';
+import m_2 from './assets/images/m_2.jpg';
+import m_3 from './assets/images/m_3.jpg';
+import m_4 from './assets/images/m_4.jpg';
+import m_5 from './assets/images/m_5.jpg';
+import m_6 from './assets/images/m_6.jpg';
+import m_7 from './assets/images/m_7.jpg';
+import m_8 from './assets/images/m_8.jpg';
+import m_9 from './assets/images/m_9.jpg';
+import m_10 from './assets/images/m_10.jpg';
+import m_11 from './assets/images/m_11.jpg';
+import m_12 from './assets/images/m_12.jpg';
+import m_13 from './assets/images/m_13.jpg';
+import m_14 from './assets/images/m_14.jpg';
 //import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
 import ToggleButton from 'react-bootstrap/ToggleButton';
@@ -40,14 +66,25 @@ function begin(uid) {
 
 function ContentView({ order, uid, ct }) {
 
+    const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline.";
+    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.";
+    const instr_3 = ' For each post, please decide whether or not you would like to SHARE them.';
+
+
     // const tempURL = 'https://localhost:3001/register/';
 
-    const redirectUrl = 'https://www.soscisurvey.de/user-study-smsi-trust/index.php?i=' + ct;
+    const redirectUrl = 'https://www.soscisurvey.de/user-study-smsi/index.php?i=' + ct;
 
     const [init, setInit] = useState(true);
     if (init) {
         sendMessage({ 'type': 'begin', 'uid': uid });
         setInit(false);
+        Swal.fire({
+            title: instr_1,
+            showCloseButton: false,
+            backdrop: false
+            //didClose: () => window.scrollTo(0, 0)
+        });
     }
 
     var mainOrd = 1;
@@ -83,6 +120,17 @@ function ContentView({ order, uid, ct }) {
         [198, 119, 65],
         [136, 278, 239]
     ];
+    const lReplyPIdx = [
+        [w_1, m_14, w_3],
+        [m_2, m_3, m_4],
+        [w_4, m_5, w_5],
+        [m_6, m_7, m_8],
+        [w_6, m_9, w_7],
+        [m_10, w_8, w_9],
+        [w_10, m_13, m_1],
+        [m_11, m_12, w_11]
+    ];
+
 
     const [shopCart, setShopCart] = useState({
         posts: [
@@ -129,6 +177,11 @@ function ContentView({ order, uid, ct }) {
         ]
     });
 
+    const [activeNext, setActiveNext] = useState(true);
+    useEffect(() => {
+        setTimeout(() => setActiveNext(false), 20000);
+    }, []);
+
     function sendMessage(message) {
         axios.post(tempURL, message)
             .then((response) => {
@@ -174,11 +227,8 @@ function ContentView({ order, uid, ct }) {
         let copiedShopCart = { ...shopCart };
         var done = true;
         for (var i = 0; i < copiedShopCart.posts.length; i++) {
-            var textV = getValue('textarea_trust_' + i);
-            copiedShopCart.posts[i]['trustText'] = textV;
             if (copiedShopCart.posts[i]['trustRank'] < 1) {
                 done = false;
-                //alert("Please provide a trustworthy ranking for all posts!");
                 break;
             }
         }
@@ -192,10 +242,17 @@ function ContentView({ order, uid, ct }) {
             //alert("Please provide a trustworthy rating for all posts!");
         }
         else {
+            for (var i = 0; i < copiedShopCart.posts.length; i++) {
+                var textV = getValue('textarea_trust_' + i);
+                copiedShopCart.posts[i]['trustText'] = textV;
+            }
             sendMessage({ 'type': 'result', 'uid': uid, 'data': copiedShopCart });
             sendMessage({ 'type': 'end', 'uid': uid });
+
+
             // sendMessage(copiedShopCart);
             window.location.replace(redirectUrl);
+
 
         }
 
@@ -233,24 +290,33 @@ function ContentView({ order, uid, ct }) {
 
         return (<div>
             <ToggleButtonGroup type="checkbox" style={{ width: "35%" }}>
-                <ToggleButton  disabled={visibleRT} variant="outline-primary" id={btnId}  className="btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "35%" }}  onClick={handleClick}>
-                <p style={{ height: "300", marginBottom: "0", fontSize: "23px" }}>
-                <svg id='rt-icon' style={{ height: "30px", width: "30px", fill: "#0d6efd" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M272 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-112 0c-17.7 0-32-14.3-32-32l0-128 32 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l32 0 0 128c0 53 43 96 96 96l112 0zM304 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l112 0c17.7 0 32 14.3 32 32l0 128-32 0c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8l-32 0 0-128c0-53-43-96-96-96L304 96z" /></svg>
-                {buttonText}
-                </p>
+                <ToggleButton disabled={visibleRT} variant="outline-primary" id={btnId} className="btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "35%" }} onClick={handleClick}>
+                    <p style={{ height: "300", marginBottom: "0", fontSize: "23px" }}>
+                        <svg id='rt-icon' style={{ height: "30px", width: "30px", fill: "#0d6efd" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M272 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-112 0c-17.7 0-32-14.3-32-32l0-128 32 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l32 0 0 128c0 53 43 96 96 96l112 0zM304 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l112 0c17.7 0 32 14.3 32 32l0 128-32 0c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8l-32 0 0-128c0-53-43-96-96-96L304 96z" /></svg>
+                        {buttonText}
+                    </p>
                 </ToggleButton>
 
             </ToggleButtonGroup>
-            
-            
+
+
         </div>
         );
     }
 
 
+    function ShareText(idx) {
 
+        let copiedShopCart = { ...shopCart };
+        var value = copiedShopCart['posts'][idx]['share'];
+        if (value === 0) {
+            return (<p></p>)
+        }
+        else {
+            return (<p>Please briefly explain why you shared this post.</p>)
+        }
+    }
     function RatingText(value) {
-
         if (value === 0) {
             return (<p></p>)
         }
@@ -265,6 +331,28 @@ function ContentView({ order, uid, ct }) {
         }
     }
 
+    function RatingTextArea(value, idx) {
+
+        if (value === 0) {
+            return (<p></p>);
+        }
+        else {
+            const taid = 'textarea_trust_' + idx;
+            return (<Form.Control id={taid} as="textarea" rows={3} />);
+        }
+    }
+    function ShareTextArea(value, idx) {
+      
+        let copiedShopCart = { ...shopCart };
+        var svalue = copiedShopCart['posts'][idx]['share'];
+        if (svalue === 0) {
+            return (<p></p>)
+        }
+        else {
+            const taid = 'textarea_trust_' + idx;
+            return (<Form.Control id={taid} as="textarea" rows={3} />);
+        }
+    }
     function RatingTextArea(value, idx) {
 
         if (value === 0) {
@@ -359,8 +447,8 @@ function ContentView({ order, uid, ct }) {
                         ))}
                     </Form>
                     <Form.Group className="mb-3" >
-                        <Form.Label>{RatingText(rateValue)}</Form.Label>
-                        <div>{RatingTextArea(rateValue, btnIdx)}</div>
+                        <Form.Label>{ShareText(btnIdx)}</Form.Label>
+                        <div>{ShareTextArea(rateValue, btnIdx)}</div>
 
                     </Form.Group>
 
@@ -394,7 +482,8 @@ function ContentView({ order, uid, ct }) {
                         {responses.map((item, index) => (
                             <li key={item}><div className="d-flex justify-content-left ">
                                 <div style={{ marginLeft: "1%" }}>
-                                    <p><i className="bi bi-person-circle" style={{ height: "40px", width: "40px", fontSize: 40 }}></i> </p>
+                                    <p><img className="circular-image" src={lReplyPIdx[postIdx][index]} alt="Logo" style={{ height: "60px", width: "60px", borderRadius: "50%", overflow: "hidden", fontSize: 50 }} /> </p>
+                
                                 </div>
                                 <div style={{ paddingLeft: "1%", paddingRight: "1%" }}>
                                     <p> <b>{names[lReplyIdx[postIdx][index]]} @{names[lReplyIdx[postIdx][index]]}</b></p>
@@ -423,6 +512,7 @@ function ContentView({ order, uid, ct }) {
                 <Accordion.Header>Information about the cited publication</Accordion.Header>
                 <Accordion.Body>
                     <div className="rounded-3" >
+                    <p> <b>Publication Reference:</b> {data.mla_citation} </p>
                         <p> <b>Title:</b> {data.mainTitle} </p>
                         <p> <b>Authors:</b> {data.mainAuthors} </p>
                         <p> <b>Publisher:</b> {data.mainPublisher} </p>
@@ -445,7 +535,8 @@ function ContentView({ order, uid, ct }) {
             <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
                 <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
                 <Accordion.Body>
-                    <p>  {data.mentionInPaper} </p>
+                <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                    <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>);
@@ -463,7 +554,8 @@ function ContentView({ order, uid, ct }) {
             <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
                 <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
                 <Accordion.Body>
-                    <p> {data.extSummaryMention} </p>
+                <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                    <p> <b>Summary:</b> {data.extSummaryMention} </p>
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>);
@@ -529,15 +621,13 @@ function ContentView({ order, uid, ct }) {
         }
     }
 
-    const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline.";
-    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.";
 
     return (<div className='ml-1' style={{ marginLeft: "20%", marginRight: "20%", width: "60%", marginTop: "3%", fontSize: 20 }}>
         <div style={{ padding: "2%", borderStyle: "solid", borderRadius: 10, borderColor: "red", borderWidth: "medium" }}>
 
             <p  ><b>Please read the following instruction carefully!</b></p>
             <p>{visibleRT ? instr_2 : instr_1}</p>
-            <p><b>{visibleRT ? '' : 'For each post, please decide whether or not you would like to share them with your circle.'}</b></p>
+            <p><b>{visibleRT ? '' : 'For each post, please decide whether or not you would like to share it with your circle.'}</b></p>
         </div>
         <hr className="hr" />
 
@@ -551,7 +641,7 @@ function ContentView({ order, uid, ct }) {
 
         </div>
         <div style={{ marginBottom: "3%" }}>
-            <button id='next' type="button" className="btn btn-outline-danger  btn-lg d-flex justify-content-center position-relative end-0" style={{ width: "100%" }} onClick={onClickHandler}>
+            <button id='next' type="button" disabled={activeNext} className="btn btn-outline-danger  btn-lg d-flex justify-content-center position-relative end-0" style={{ width: "100%" }} onClick={onClickHandler}>
                 <p style={{ height: "300", marginBottom: "0", fontSize: "25px" }}>
                 Next Page >
                 </p>
