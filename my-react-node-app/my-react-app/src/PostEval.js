@@ -67,8 +67,9 @@ function begin(uid) {
 function ContentView({ order, uid, ct }) {
 
     const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline.";
-    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.";
+    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the posts you shared.";
     const instr_3 = ' For each post, please decide whether or not you would like to SHARE them.';
+    const instr_4 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. On this page, you will find your timeline.";
 
 
     // const tempURL = 'https://localhost:3001/register/';
@@ -79,12 +80,37 @@ function ContentView({ order, uid, ct }) {
     if (init) {
         sendMessage({ 'type': 'begin', 'uid': uid });
         setInit(false);
-        Swal.fire({
-            title: instr_1,
-            showCloseButton: false,
-            backdrop: false
-            //didClose: () => window.scrollTo(0, 0)
+        const inputOptions = new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({
+                    "#ff0000": "Red",
+                    "#00ff00": "Green",
+                    "#0000ff": "Blue"
+                });
+            }, 3000);
         });
+        const swalWithBootstrapButtons = Swal.mixin({
+            
+        });
+        Swal.fire({
+            title: instr_4 + instr_3,
+            showCloseButton: false,
+            timer: 5000,
+            showConfirmButton: false,
+            backdrop: false,
+            animation: false
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                swalWithBootstrapButtons.fire({
+                title: instr_4 + instr_3,
+                showCloseButton: false,
+                backdrop: false,
+                animation: false
+            });
+            }
+            
+        });
+
     }
 
     var mainOrd = 1;
@@ -179,7 +205,7 @@ function ContentView({ order, uid, ct }) {
 
     const [activeNext, setActiveNext] = useState(true);
     useEffect(() => {
-        setTimeout(() => setActiveNext(false), 20000);
+        setTimeout(() => setActiveNext(false), 2000);
     }, []);
 
     function sendMessage(message) {
@@ -198,7 +224,7 @@ function ContentView({ order, uid, ct }) {
         sendMessage({ 'type': 'next_page', 'uid': uid });
 
         Swal.fire({
-            'text': 'Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.',
+            'text': 'Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the posts you shared in the open text box.',
             didClose: () => window.scrollTo(0, 0)
         }).then((result) => {
             window.scrollTo(0, 0);
@@ -207,6 +233,9 @@ function ContentView({ order, uid, ct }) {
         //alert('Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.')
         setVisibleRT(true);
         changeHandler();
+
+        var el = document.getElementById('accr1');
+        //el.activeKey = null;
     }
 
     function getValue(id) {
@@ -342,7 +371,7 @@ function ContentView({ order, uid, ct }) {
         }
     }
     function ShareTextArea(value, idx) {
-      
+
         let copiedShopCart = { ...shopCart };
         var svalue = copiedShopCart['posts'][idx]['share'];
         if (svalue === 0) {
@@ -474,29 +503,54 @@ function ContentView({ order, uid, ct }) {
             active ? setActive(false) : setActive(true);
         };
 
-        return (<Accordion>
-            <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
-                <Accordion.Header>Show Responses</Accordion.Header>
-                <Accordion.Body>
-                    <ul className="d-grid gap-3 list-unstyled">
-                        {responses.map((item, index) => (
-                            <li key={item}><div className="d-flex justify-content-left ">
-                                <div style={{ marginLeft: "1%" }}>
-                                    <p><img className="circular-image" src={lReplyPIdx[postIdx][index]} alt="Logo" style={{ height: "60px", width: "60px", borderRadius: "50%", overflow: "hidden", fontSize: 50 }} /> </p>
-                
-                                </div>
-                                <div style={{ paddingLeft: "1%", paddingRight: "1%" }}>
-                                    <p> <b>{names[lReplyIdx[postIdx][index]]} @{names[lReplyIdx[postIdx][index]]}</b></p>
-                                    <p>  {item}</p>
+        if (visibleRT)
+            {return (<Accordion id={'accr' + postIdx} defaultActiveKey={null}>
+                <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>Show Responses</Accordion.Header>
+                    <Accordion.Body>
+                        <ul className="d-grid gap-3 list-unstyled">
+                            {responses.map((item, index) => (
+                                <li key={item}><div className="d-flex justify-content-left ">
+                                    <div style={{ marginLeft: "1%" }}>
+                                        <p><img className="circular-image" src={lReplyPIdx[postIdx][index]} alt="Logo" style={{ height: "60px", width: "60px", borderRadius: "50%", overflow: "hidden", fontSize: 50 }} /> </p>
 
+                                    </div>
+                                    <div style={{ paddingLeft: "1%", paddingRight: "1%" }}>
+                                        <p> <b>{names[lReplyIdx[postIdx][index]]} @{names[lReplyIdx[postIdx][index]]}</b></p>
+                                        <p>  {item}</p>
+
+                                    </div>
                                 </div>
-                            </div>
-                            </li>
-                        ))}
-                    </ul>
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion>)
+                                </li>
+                            ))}
+                        </ul>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>);}
+        else
+            {return (<Accordion id={'accrc' + postIdx} defaultActiveKey={null}>
+                <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>Show Responses</Accordion.Header>
+                    <Accordion.Body>
+                        <ul className="d-grid gap-3 list-unstyled">
+                            {responses.map((item, index) => (
+                                <li key={item}><div className="d-flex justify-content-left ">
+                                    <div style={{ marginLeft: "1%" }}>
+                                        <p><img className="circular-image" src={lReplyPIdx[postIdx][index]} alt="Logo" style={{ height: "60px", width: "60px", borderRadius: "50%", overflow: "hidden", fontSize: 50 }} /> </p>
+
+                                    </div>
+                                    <div style={{ paddingLeft: "1%", paddingRight: "1%" }}>
+                                        <p> <b>{names[lReplyIdx[postIdx][index]]} @{names[lReplyIdx[postIdx][index]]}</b></p>
+                                        <p>  {item}</p>
+
+                                    </div>
+                                </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>)};
     }
 
     function AccordionMetadata(data, postIdx) {
@@ -512,10 +566,10 @@ function ContentView({ order, uid, ct }) {
                 <Accordion.Header>Information about the cited publication</Accordion.Header>
                 <Accordion.Body>
                     <div className="rounded-3" >
-                    <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
                         <p> <b>Title:</b> {data.mainTitle} </p>
                         <p> <b>Authors:</b> {data.mainAuthors} </p>
-                        <p> <b>Publisher:</b> {data.mainPublisher} </p>
+
                         <p> <b>Abstract:</b> {data.mainAbs} </p>
                     </div>
                 </Accordion.Body>
@@ -535,7 +589,7 @@ function ContentView({ order, uid, ct }) {
             <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
                 <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
                 <Accordion.Body>
-                <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                    <p> <b>Publication Reference:</b> {data.mla_citation} </p>
                     <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
                 </Accordion.Body>
             </Accordion.Item>
@@ -554,7 +608,7 @@ function ContentView({ order, uid, ct }) {
             <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
                 <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
                 <Accordion.Body>
-                <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                    <p> <b>Publication Reference:</b> {data.mla_citation} </p>
                     <p> <b>Summary:</b> {data.extSummaryMention} </p>
                 </Accordion.Body>
             </Accordion.Item>
