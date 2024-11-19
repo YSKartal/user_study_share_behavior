@@ -1,4 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import 'reactjs-popup/dist/index.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './popup.css';
@@ -8,6 +10,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import { mdata } from './data.js';
 import { names } from './names.js';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import pp_1 from './assets/images/pp_1.jpg';
 import pp_2 from './assets/images/pp_2.jpg';
@@ -47,6 +50,8 @@ import m_14 from './assets/images/m_14.jpg';
 import Swal from 'sweetalert2';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import Collapse from 'react-bootstrap/Collapse';
+import AccordionCollapse from 'react-bootstrap/AccordionCollapse'
 
 
 const tempURL = process.env.REACT_APP_NODE_URL_R;
@@ -80,38 +85,21 @@ function ContentView({ order, uid, ct }) {
     if (init) {
         sendMessage({ 'type': 'begin', 'uid': uid });
         setInit(false);
-        const inputOptions = new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    "#ff0000": "Red",
-                    "#00ff00": "Green",
-                    "#0000ff": "Blue"
-                });
-            }, 3000);
-        });
-        const swalWithBootstrapButtons = Swal.mixin({
-            
-        });
+
         Swal.fire({
             title: instr_4 + instr_3,
             showCloseButton: false,
-            timer: 5000,
-            showConfirmButton: false,
             backdrop: false,
-            animation: false
-        }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.timer) {
-                swalWithBootstrapButtons.fire({
-                title: instr_4 + instr_3,
-                showCloseButton: false,
-                backdrop: false,
-                animation: false
-            });
-            }
-            
+            allowEscapeKey: false,
+            animation: false,
+
         });
+        Swal.disableButtons();
 
     }
+    useEffect(() => {
+        setTimeout(() => Swal.enableButtons(), 5000);
+    }, []);
 
     var mainOrd = 1;
     if (order == '2') {
@@ -236,6 +224,7 @@ function ContentView({ order, uid, ct }) {
 
         var el = document.getElementById('accr1');
         //el.activeKey = null;
+
     }
 
     function getValue(id) {
@@ -503,9 +492,10 @@ function ContentView({ order, uid, ct }) {
             active ? setActive(false) : setActive(true);
         };
 
-        if (visibleRT)
-            {return (<Accordion id={'accr' + postIdx} defaultActiveKey={null}>
-                <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
+        
+        if (visibleRT) {
+            return (<Accordion id={'accr' + postIdx}  >
+                <Accordion.Item id={'accri' + postIdx} eventKey="0" onClick={(e) => handleClick(active)}>
                     <Accordion.Header>Show Responses</Accordion.Header>
                     <Accordion.Body>
                         <ul className="d-grid gap-3 list-unstyled">
@@ -526,10 +516,13 @@ function ContentView({ order, uid, ct }) {
                         </ul>
                     </Accordion.Body>
                 </Accordion.Item>
-            </Accordion>);}
-        else
-            {return (<Accordion id={'accrc' + postIdx} defaultActiveKey={null}>
-                <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
+            </Accordion>);
+        }
+        else {
+            return (
+            <div>
+                <Accordion id={'accrc' + postIdx}>
+                <Accordion.Item id={'accdr' + postIdx} eventKey="0" onClick={(e) => handleClick(active)}>
                     <Accordion.Header>Show Responses</Accordion.Header>
                     <Accordion.Body>
                         <ul className="d-grid gap-3 list-unstyled">
@@ -550,7 +543,10 @@ function ContentView({ order, uid, ct }) {
                         </ul>
                     </Accordion.Body>
                 </Accordion.Item>
-            </Accordion>)};
+            </Accordion>
+            </div>
+            )
+        };
     }
 
     function AccordionMetadata(data, postIdx) {
@@ -561,20 +557,43 @@ function ContentView({ order, uid, ct }) {
             active ? setActive(false) : setActive(true);
         };
 
-        return (<Accordion alwaysOpen>
-            <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
-                <Accordion.Header>Information about the cited publication</Accordion.Header>
-                <Accordion.Body>
-                    <div className="rounded-3" >
-                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                        <p> <b>Title:</b> {data.mainTitle} </p>
-                        <p> <b>Authors:</b> {data.mainAuthors} </p>
-
-                        <p> <b>Abstract:</b> {data.mainAbs} </p>
-                    </div>
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion>)
+        if (visibleRT){
+            return (<Accordion alwaysOpen>
+                <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>Information about the cited publication</Accordion.Header>
+                    <Accordion.Body>
+                        <div className="rounded-3" >
+                            <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                            <p> <b>Title:</b> {data.mainTitle} </p>
+                            <p> <b>Authors:</b> {data.mainAuthors} </p>
+    
+                            <p> <b>Abstract:</b> {data.mainAbs} </p>
+                        </div>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>)
+        }
+        else {
+            return (
+            <div>
+                <Accordion alwaysOpen>
+                <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>Information about the cited publication</Accordion.Header>
+                    <Accordion.Body>
+                        <div className="rounded-3" >
+                            <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                            <p> <b>Title:</b> {data.mainTitle} </p>
+                            <p> <b>Authors:</b> {data.mainAuthors} </p>
+    
+                            <p> <b>Abstract:</b> {data.mainAbs} </p>
+                        </div>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+            </div>
+            )
+        }
+        
     }
 
     function AccordionPMention(data, postIdx) {
@@ -585,15 +604,33 @@ function ContentView({ order, uid, ct }) {
             active ? setActive(false) : setActive(true);
         };
 
-        return (<Accordion alwaysOpen>
-            <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
-                <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
-                <Accordion.Body>
-                    <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                    <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion>);
+        if (visibleRT) {
+            return (<Accordion alwaysOpen>
+                <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
+                    <Accordion.Body>
+                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                        <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>);
+        }
+        else {
+            return (
+            <div>
+                <Accordion alwaysOpen>
+                <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
+                    <Accordion.Body>
+                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                        <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+            </div>
+            );
+        }
+        
     }
 
     function AccordionSummary(data, postIdx) {
@@ -603,16 +640,33 @@ function ContentView({ order, uid, ct }) {
             sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'ai_sum', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
-
-        return (<Accordion alwaysOpen>
-            <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
-                <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
-                <Accordion.Body>
-                    <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                    <p> <b>Summary:</b> {data.extSummaryMention} </p>
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion>);
+        if (visibleRT) {
+            return (<Accordion alwaysOpen>
+                <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
+                    <Accordion.Body>
+                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                        <p> <b>Summary:</b> {data.extSummaryMention} </p>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>);
+        }
+        else {
+            return (
+            <div>
+                <Accordion alwaysOpen>
+                <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
+                    <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
+                    <Accordion.Body>
+                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                        <p> <b>Summary:</b> {data.extSummaryMention} </p>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+            </div>
+            );
+        }
+        
     }
 
     function SetCondition(cond, data, idx) {
