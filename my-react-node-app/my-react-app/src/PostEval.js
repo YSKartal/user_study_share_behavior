@@ -193,7 +193,7 @@ function ContentView({ order, uid, ct }) {
 
     const [activeNext, setActiveNext] = useState(true);
     useEffect(() => {
-        setTimeout(() => setActiveNext(false), 2000);
+        setTimeout(() => setActiveNext(false), 20000);
     }, []);
 
     function sendMessage(message) {
