@@ -10,7 +10,6 @@ import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
 import { mdata } from './data.js';
 import { names } from './names.js';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import pp_1 from './assets/images/pp_1.jpg';
 import pp_2 from './assets/images/pp_2.jpg';
@@ -21,7 +20,6 @@ import pp_6 from './assets/images/pp_6.jpg';
 import pp_7 from './assets/images/pp_7.jpg';
 import pp_8 from './assets/images/pp_8.jpg';
 import w_1 from './assets/images/w_1.jpg';
-import w_2 from './assets/images/w_2.jpg';
 import w_3 from './assets/images/w_3.jpg';
 import w_4 from './assets/images/w_4.jpg';
 import w_5 from './assets/images/w_5.jpg';
@@ -31,7 +29,6 @@ import w_8 from './assets/images/w_8.jpg';
 import w_9 from './assets/images/w_9.jpg';
 import w_10 from './assets/images/w_10.jpg';
 import w_11 from './assets/images/w_11.jpg';
-import w_12 from './assets/images/w_12.jpg';
 import m_1 from './assets/images/m_1.jpg';
 import m_2 from './assets/images/m_2.jpg';
 import m_3 from './assets/images/m_3.jpg';
@@ -46,16 +43,13 @@ import m_11 from './assets/images/m_11.jpg';
 import m_12 from './assets/images/m_12.jpg';
 import m_13 from './assets/images/m_13.jpg';
 import m_14 from './assets/images/m_14.jpg';
-//import Button from 'react-bootstrap/Button';
 import Swal from 'sweetalert2';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import Collapse from 'react-bootstrap/Collapse';
-import AccordionCollapse from 'react-bootstrap/AccordionCollapse'
 
 
 const tempURL = process.env.REACT_APP_NODE_URL_R;
-function sendMessage(tempURL, message) {
+function sendMessage(message) {
     axios.post(tempURL, message)
         .then((response) => {
             console.log(response);
@@ -64,26 +58,18 @@ function sendMessage(tempURL, message) {
         });
 }
 
-function begin(uid) {
-    sendMessage(tempURL, { 'type': 'begin', 'uid': uid });
-
-};
-
-function ContentView({ order, uid, ct }) {
+function ContentView({ order, uid, ct, pid }) {
 
     const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline.";
     const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the posts you shared.";
     const instr_3 = ' For each post, please decide whether or not you would like to SHARE them.';
     const instr_4 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. On this page, you will find your timeline.";
-
-
     // const tempURL = 'https://localhost:3001/register/';
-
     const redirectUrl = 'https://www.soscisurvey.de/user-study-smsi/index.php?i=' + ct;
 
     const [init, setInit] = useState(true);
     if (init) {
-        sendMessage({ 'type': 'begin', 'uid': uid });
+        sendMessage({ 'type': 'begin', 'uid': uid, 'ct': ct, 'pid': pid });
         setInit(false);
 
         Swal.fire({
@@ -95,10 +81,9 @@ function ContentView({ order, uid, ct }) {
 
         });
         Swal.disableButtons();
-
     }
     useEffect(() => {
-        setTimeout(() => Swal.enableButtons(), 5000);
+        setTimeout(() => init ? {} : Swal.enableButtons(), 5000);
     }, []);
 
     var mainOrd = 1;
@@ -151,42 +136,42 @@ function ContentView({ order, uid, ct }) {
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             },
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             },
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             },
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             },
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             },
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             },
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             },
             {
                 share: 0,
                 trustRank: 0,
-                trustText: ''
+                shareText: ''
             }
         ]
     });
@@ -196,35 +181,21 @@ function ContentView({ order, uid, ct }) {
         setTimeout(() => setActiveNext(false), 20000);
     }, []);
 
-    function sendMessage(message) {
-        axios.post(tempURL, message)
-            .then((response) => {
-                console.log(response);
-            }, (error) => {
-                console.log(error);
-            });
-    }
-
     const [visibleRT, setVisibleRT] = useState(false);
 
     const [onClickHandler, setOnClickHandler] = useState(() => firstFunction);
     function firstFunction() {
-        sendMessage({ 'type': 'next_page', 'uid': uid });
+        sendMessage({ 'type': 'next_page', 'uid': uid, 'ct': ct, 'pid': pid });
 
         Swal.fire({
             'text': 'Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the posts you shared in the open text box.',
             didClose: () => window.scrollTo(0, 0)
-        }).then((result) => {
+        }).then(() => {
             window.scrollTo(0, 0);
         });
         window.scrollTo(0, 0);
-        //alert('Please check the tweets in the timeline again and tell us how trustworthy you find them. Please justify your judgement with a few sentences in the open text box.')
         setVisibleRT(true);
         changeHandler();
-
-        var el = document.getElementById('accr1');
-        //el.activeKey = null;
-
     }
 
     function getValue(id) {
@@ -257,24 +228,17 @@ function ContentView({ order, uid, ct }) {
                 icon: 'error',
                 confirmButtonText: 'OK'
             })
-            //alert("Please provide a trustworthy rating for all posts!");
         }
         else {
-            for (var i = 0; i < copiedShopCart.posts.length; i++) {
-                var textV = getValue('textarea_trust_' + i);
-                copiedShopCart.posts[i]['trustText'] = textV;
+            for (var j = 0; j < copiedShopCart.posts.length; j++) {
+                var textV = getValue('textarea_trust_' + j);
+                copiedShopCart.posts[j]['shareText'] = textV;
             }
-            sendMessage({ 'type': 'result', 'uid': uid, 'data': copiedShopCart });
-            sendMessage({ 'type': 'end', 'uid': uid });
+            sendMessage({ 'type': 'result', 'uid': uid, 'ct': ct, 'pid': pid, 'data': copiedShopCart });
+            sendMessage({ 'type': 'end', 'ct': ct, 'pid': pid, 'uid': uid });
 
-
-            // sendMessage(copiedShopCart);
             window.location.replace(redirectUrl);
-
-
         }
-
-
     }
 
     function changeHandler() {
@@ -303,26 +267,22 @@ function ContentView({ order, uid, ct }) {
                 });
         }
 
-
-        return (<div>
-            <ToggleButtonGroup type="checkbox" style={{ width: "35%" }}>
-                <ToggleButton disabled={visibleRT} variant="outline-primary" id={btnId} className="btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "35%" }} onClick={handleClick}>
-                    <p style={{ height: "300", marginBottom: "0", fontSize: "23px" }}>
-                        <svg id='rt-icon' style={{ height: "30px", width: "30px", fill: "#0d6efd" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M272 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-112 0c-17.7 0-32-14.3-32-32l0-128 32 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l32 0 0 128c0 53 43 96 96 96l112 0zM304 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l112 0c17.7 0 32 14.3 32 32l0 128-32 0c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8l-32 0 0-128c0-53-43-96-96-96L304 96z" /></svg>
-                        {buttonText}
-                    </p>
-                </ToggleButton>
-
-            </ToggleButtonGroup>
-
-
-        </div>
+        return (
+            <div>
+                <ToggleButtonGroup type="checkbox" style={{ width: "35%" }}>
+                    <ToggleButton disabled={visibleRT} variant="outline-primary" id={btnId} className="btn-lg share-1 d-flex justify-content-center position-relative end-0" style={{ width: "35%" }} onClick={handleClick}>
+                        <p style={{ height: "300", marginBottom: "0", fontSize: "23px" }}>
+                            <svg id='rt-icon' style={{ height: "30px", width: "30px", fill: "#0d6efd" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M272 416c17.7 0 32-14.3 32-32s-14.3-32-32-32l-112 0c-17.7 0-32-14.3-32-32l0-128 32 0c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l32 0 0 128c0 53 43 96 96 96l112 0zM304 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l112 0c17.7 0 32 14.3 32 32l0 128-32 0c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8l-32 0 0-128c0-53-43-96-96-96L304 96z" /></svg>
+                            {buttonText}
+                        </p>
+                    </ToggleButton>
+                </ToggleButtonGroup>
+            </div>
         );
     }
 
 
     function ShareText(idx) {
-
         let copiedShopCart = { ...shopCart };
         var value = copiedShopCart['posts'][idx]['share'];
         if (value === 0) {
@@ -332,47 +292,13 @@ function ContentView({ order, uid, ct }) {
             return (<p>Please briefly explain why you shared this post.</p>)
         }
     }
-    function RatingText(value) {
-        if (value === 0) {
-            return (<p></p>)
-        }
-        else if (value > 3) {
-            return (<p>Please briefly describe why you trust this post.</p>)
-        }
-        else if (value < 3) {
-            return (<p>Please briefly describe why you distrust this post.</p>)
-        }
-        else {
-            return (<p>Please briefly explain why you neither trust nor distrust this article.</p>)
-        }
-    }
-
-    function RatingTextArea(value, idx) {
-
-        if (value === 0) {
-            return (<p></p>);
-        }
-        else {
-            const taid = 'textarea_trust_' + idx;
-            return (<Form.Control id={taid} as="textarea" rows={3} />);
-        }
-    }
+    
     function ShareTextArea(value, idx) {
 
         let copiedShopCart = { ...shopCart };
         var svalue = copiedShopCart['posts'][idx]['share'];
         if (svalue === 0) {
             return (<p></p>)
-        }
-        else {
-            const taid = 'textarea_trust_' + idx;
-            return (<Form.Control id={taid} as="textarea" rows={3} />);
-        }
-    }
-    function RatingTextArea(value, idx) {
-
-        if (value === 0) {
-            return (<p></p>);
         }
         else {
             const taid = 'textarea_trust_' + idx;
@@ -486,11 +412,11 @@ function ContentView({ order, uid, ct }) {
 
         function handleClick(ekey) {
             console.log(postIdx, 'response', ekey, uid);
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'response', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'response', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
 
-        
+
         if (visibleRT) {
             return (<Accordion id={'accr' + postIdx}  >
                 <Accordion.Item id={'accri' + postIdx} eventKey="0" onClick={(e) => handleClick(active)}>
@@ -518,31 +444,31 @@ function ContentView({ order, uid, ct }) {
         }
         else {
             return (
-            <div>
-                <Accordion id={'accrc' + postIdx}>
-                <Accordion.Item id={'accdr' + postIdx} eventKey="0" onClick={(e) => handleClick(active)}>
-                    <Accordion.Header>Show Responses</Accordion.Header>
-                    <Accordion.Body>
-                        <ul className="d-grid gap-3 list-unstyled">
-                            {responses.map((item, index) => (
-                                <li key={item}><div className="d-flex justify-content-left ">
-                                    <div style={{ marginLeft: "1%" }}>
-                                        <p><img className="circular-image" src={lReplyPIdx[postIdx][index]} alt="Logo" style={{ height: "60px", width: "60px", borderRadius: "50%", overflow: "hidden", fontSize: 50 }} /> </p>
+                <div>
+                    <Accordion id={'accrc' + postIdx}>
+                        <Accordion.Item id={'accdr' + postIdx} eventKey="0" onClick={(e) => handleClick(active)}>
+                            <Accordion.Header>Show Responses</Accordion.Header>
+                            <Accordion.Body>
+                                <ul className="d-grid gap-3 list-unstyled">
+                                    {responses.map((item, index) => (
+                                        <li key={item}><div className="d-flex justify-content-left ">
+                                            <div style={{ marginLeft: "1%" }}>
+                                                <p><img className="circular-image" src={lReplyPIdx[postIdx][index]} alt="Logo" style={{ height: "60px", width: "60px", borderRadius: "50%", overflow: "hidden", fontSize: 50 }} /> </p>
 
-                                    </div>
-                                    <div style={{ paddingLeft: "1%", paddingRight: "1%" }}>
-                                        <p> <b>{names[lReplyIdx[postIdx][index]]} @{names[lReplyIdx[postIdx][index]]}</b></p>
-                                        <p>  {item}</p>
+                                            </div>
+                                            <div style={{ paddingLeft: "1%", paddingRight: "1%" }}>
+                                                <p> <b>{names[lReplyIdx[postIdx][index]]} @{names[lReplyIdx[postIdx][index]]}</b></p>
+                                                <p>  {item}</p>
 
-                                    </div>
-                                </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-            </div>
+                                            </div>
+                                        </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
             )
         };
     }
@@ -551,11 +477,11 @@ function ContentView({ order, uid, ct }) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'metadata', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'metadata', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
 
-        if (visibleRT){
+        if (visibleRT) {
             return (<Accordion alwaysOpen>
                 <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
                     <Accordion.Header>Information about the cited publication</Accordion.Header>
@@ -564,7 +490,7 @@ function ContentView({ order, uid, ct }) {
                             <p> <b>Publication Reference:</b> {data.mla_citation} </p>
                             <p> <b>Title:</b> {data.mainTitle} </p>
                             <p> <b>Authors:</b> {data.mainAuthors} </p>
-    
+
                             <p> <b>Abstract:</b> {data.mainAbs} </p>
                         </div>
                     </Accordion.Body>
@@ -573,32 +499,32 @@ function ContentView({ order, uid, ct }) {
         }
         else {
             return (
-            <div>
-                <Accordion alwaysOpen>
-                <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
-                    <Accordion.Header>Information about the cited publication</Accordion.Header>
-                    <Accordion.Body>
-                        <div className="rounded-3" >
-                            <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                            <p> <b>Title:</b> {data.mainTitle} </p>
-                            <p> <b>Authors:</b> {data.mainAuthors} </p>
-    
-                            <p> <b>Abstract:</b> {data.mainAbs} </p>
-                        </div>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-            </div>
+                <div>
+                    <Accordion alwaysOpen>
+                        <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
+                            <Accordion.Header>Information about the cited publication</Accordion.Header>
+                            <Accordion.Body>
+                                <div className="rounded-3" >
+                                    <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                                    <p> <b>Title:</b> {data.mainTitle} </p>
+                                    <p> <b>Authors:</b> {data.mainAuthors} </p>
+
+                                    <p> <b>Abstract:</b> {data.mainAbs} </p>
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
             )
         }
-        
+
     }
 
     function AccordionPMention(data, postIdx) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'mention', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'mention', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
 
@@ -615,27 +541,27 @@ function ContentView({ order, uid, ct }) {
         }
         else {
             return (
-            <div>
-                <Accordion alwaysOpen>
-                <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
-                    <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
-                    <Accordion.Body>
-                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                        <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-            </div>
+                <div>
+                    <Accordion alwaysOpen>
+                        <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
+                            <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
+                            <Accordion.Body>
+                                <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                                <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
             );
         }
-        
+
     }
 
     function AccordionSummary(data, postIdx) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'index': postIdx, 'sub_type': 'ai_sum', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'ai_sum', 'state': ekey });
             active ? setActive(false) : setActive(true);
         };
         if (visibleRT) {
@@ -651,20 +577,20 @@ function ContentView({ order, uid, ct }) {
         }
         else {
             return (
-            <div>
-                <Accordion alwaysOpen>
-                <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
-                    <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
-                    <Accordion.Body>
-                        <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                        <p> <b>Summary:</b> {data.extSummaryMention} </p>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-            </div>
+                <div>
+                    <Accordion alwaysOpen>
+                        <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
+                            <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
+                            <Accordion.Body>
+                                <p> <b>Publication Reference:</b> {data.mla_citation} </p>
+                                <p> <b>Summary:</b> {data.extSummaryMention} </p>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
             );
         }
-        
+
     }
 
     function SetCondition(cond, data, idx) {

@@ -9,6 +9,7 @@ function App() {
   const queryParameters = new URLSearchParams(window.location.search)
   const order = queryParameters.get("order")
   const caseToken = queryParameters.get("caseToken")
+  const pid = queryParameters.get("pid")
   const uid = uuidv4()
 
   console.log(process.env.REACT_APP_NODE_URL_R)
@@ -43,7 +44,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <ContentView order={order} uid={uid} ct={caseToken}/>
+        <ContentView order={order} uid={uid} ct={caseToken} pid={pid}/>
       </div>
       
     </div>
