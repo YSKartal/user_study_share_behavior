@@ -295,9 +295,7 @@ function ContentView({ order, uid, ct }) {
             console.log(shopCart);
             console.log(btnIdx, uid);
 
-
-
-            axios.post('http://localhost:3001/register/', shopCart)
+            axios.post(tempURL, shopCart)
                 .then((response) => {
                     console.log(response);
                 }, (error) => {
