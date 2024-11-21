@@ -61,7 +61,7 @@ function sendMessage(message) {
 function ContentView({ order, uid, ct, pid }) {
 
     const instr_1 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. Below you will find your timeline.";
-    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the posts you shared.";
+    const instr_2 = "Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the respective posts.";
     const instr_3 = ' For each post, please decide whether or not you would like to SHARE them.';
     const instr_4 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. On this page, you will find your timeline.";
     // const tempURL = 'https://localhost:3001/register/';
@@ -188,7 +188,7 @@ function ContentView({ order, uid, ct, pid }) {
         sendMessage({ 'type': 'next_page', 'uid': uid, 'ct': ct, 'pid': pid });
 
         Swal.fire({
-            'text': 'Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the posts you shared in the open text box.',
+            'text': 'Please check the tweets in the timeline again and tell us how trustworthy you find them. Please briefly describe why you shared the respective posts in the open text box.',
             didClose: () => window.scrollTo(0, 0)
         }).then(() => {
             window.scrollTo(0, 0);
