@@ -412,7 +412,7 @@ function ContentView({ order, uid, ct, pid }) {
 
         function handleClick(ekey) {
             console.log(postIdx, 'response', ekey, uid);
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'response', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'response', 'state': ekey, 'post_id': mdata.posts[lMainOrd[postIdx]].title });
             active ? setActive(false) : setActive(true);
         };
 
@@ -477,7 +477,7 @@ function ContentView({ order, uid, ct, pid }) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'metadata', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'metadata', 'state': ekey, 'post_id': mdata.posts[lMainOrd[postIdx]].title });
             active ? setActive(false) : setActive(true);
         };
 
@@ -524,7 +524,7 @@ function ContentView({ order, uid, ct, pid }) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'mention', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'mention', 'state': ekey, 'post_id': mdata.posts[lMainOrd[postIdx]].title });
             active ? setActive(false) : setActive(true);
         };
 
@@ -561,7 +561,7 @@ function ContentView({ order, uid, ct, pid }) {
         const [active, setActive] = useState(false);
 
         function handleClick(ekey) {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'ai_sum', 'state': ekey });
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'ai_sum', 'state': ekey, 'post_id': mdata.posts[lMainOrd[postIdx]].title });
             active ? setActive(false) : setActive(true);
         };
         if (visibleRT) {
@@ -612,6 +612,10 @@ function ContentView({ order, uid, ct, pid }) {
 
     function SetPost(data, cond, btnIdx) {
 
+        function hcLink(post_id) {
+            sendMessage({ 'type': 'post', 'uid': uid, 'ct': ct, 'pid': pid, 'index': btnIdx, 'sub_type': 'mention', 'post_id': post_id, 'detail': 'link_click' });
+        };
+
         return (<div key={btnIdx} className=" border border d-grid gap-3" style={{ alignItems: 'flex-start', paddingLeft: "2%", paddingTop: "2%", paddingBottom: "2%", paddingRight: "2%" }}>
             <div className="d-flex justify-content-center   " >
                 <div style={{ marginLeft: "1%" }}>
@@ -620,7 +624,7 @@ function ContentView({ order, uid, ct, pid }) {
                 </div>
                 <div className="rounded-3 d-grid gap-3" style={{ paddingLeft: "1%", width: "150%", fontSize: "18px" }}>
                     <p> <b>{lUser[btnIdx]} @{lUser[btnIdx]}</b></p>
-                    <p>  {data.mainPost} <a href={data.mainURL} target="_blank">{data.mainRURL}</a></p>
+                    <p>  {data.mainPost} <a href={data.mainURL} onClick={(e) => hcLink(data.title)} target="_blank">{data.mainRURL}</a></p>
                     <div>
                         {AccordionResp(data.replies, btnIdx)}
                     </div>
@@ -638,17 +642,23 @@ function ContentView({ order, uid, ct, pid }) {
         </div>);
     }
 
+    var lMainOrd;
     function setOrder(ord, idx) {
         switch (ord) {
             case 1:
+                lMainOrd = lPostOrder_1;
                 return SetPost(mdata.posts[lPostOrder_1[idx]], lPostTzpes_1[idx], idx);
             case 2:
+                lMainOrd = lPostOrder_2;
                 return SetPost(mdata.posts[lPostOrder_2[idx]], lPostTzpes_2[idx], idx);
             case 3:
+                lMainOrd = lPostOrder_3;
                 return SetPost(mdata.posts[lPostOrder_3[idx]], lPostTzpes_3[idx], idx);
             case 4:
+                lMainOrd = lPostOrder_4;
                 return SetPost(mdata.posts[lPostOrder_4[idx]], lPostTzpes_4[idx], idx);
             default:
+                lMainOrd = lPostOrder_1;
                 return SetPost(mdata.posts[lPostOrder_1[idx]], lPostTzpes_1[idx], idx);
         }
     }
