@@ -234,10 +234,16 @@ function ContentView({ order, uid, ct, pid }) {
                 var textV = getValue('textarea_trust_' + j);
                 copiedShopCart.posts[j]['shareText'] = textV;
             }
-            sendMessage({ 'type': 'result', 'uid': uid, 'ct': ct, 'pid': pid, 'data': copiedShopCart });
             sendMessage({ 'type': 'end', 'ct': ct, 'pid': pid, 'uid': uid });
-
-            window.location.replace(redirectUrl);
+            //sendMessage({ 'type': 'result', 'uid': uid, 'ct': ct, 'pid': pid, 'data': copiedShopCart });
+            axios.post(tempURL, { 'type': 'result', 'uid': uid, 'ct': ct, 'pid': pid, 'data': copiedShopCart })
+                .then((response) => {
+                    console.log(response);
+                    window.location.replace(redirectUrl);
+                }, (error) => {
+                    console.log(error);
+                });
+            //window.location.replace(redirectUrl);
         }
     }
 
@@ -292,7 +298,7 @@ function ContentView({ order, uid, ct, pid }) {
             return (<p>Please briefly explain why you shared this post.</p>)
         }
     }
-    
+
     function ShareTextArea(value, idx) {
 
         let copiedShopCart = { ...shopCart };
