@@ -43,6 +43,7 @@ import m_11 from './assets/images/m_11.jpg';
 import m_12 from './assets/images/m_12.jpg';
 import m_13 from './assets/images/m_13.jpg';
 import m_14 from './assets/images/m_14.jpg';
+import ShowMoreText from "react-show-more-text";
 import Swal from 'sweetalert2';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
@@ -98,12 +99,12 @@ function ContentView({ order, uid, ct, pid }) {
     }
 
     const lPostOrder_1 = [7, 3, 5, 2, 4, 0, 1, 6]
-    const lPostTzpes_1 = [1, 1, 1, 1, 1, 1, 1, 1]
     const lPostOrder_2 = [2, 6, 3, 7, 1, 4, 5, 0]
-    const lPostTzpes_2 = [2, 2, 2, 2, 2, 2, 2, 2]
     const lPostOrder_3 = [3, 0, 6, 5, 7, 1, 4, 2]
-    const lPostTzpes_3 = [3, 3, 3, 3, 3, 3, 3, 3]
     const lPostOrder_4 = [2, 3, 5, 6, 7, 0, 1, 4]
+    const lPostTzpes_1 = [1, 1, 1, 1, 1, 1, 1, 1]
+    const lPostTzpes_2 = [2, 2, 2, 2, 2, 2, 2, 2]
+    const lPostTzpes_3 = [3, 3, 3, 3, 3, 3, 3, 3]
     const lPostTzpes_4 = [0, 0, 0, 0, 0, 0, 0, 0]
 
     const lImages = [pp_5, pp_6, pp_1, pp_7, pp_2, pp_3, pp_8, pp_4]
@@ -487,6 +488,9 @@ function ContentView({ order, uid, ct, pid }) {
             active ? setActive(false) : setActive(true);
         };
 
+        function executeOnClick(isExpanded) {
+            console.log(isExpanded);
+        };
         if (visibleRT) {
             return (<Accordion alwaysOpen>
                 <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
@@ -497,7 +501,22 @@ function ContentView({ order, uid, ct, pid }) {
                             <p> <b>Title:</b> {data.mainTitle} </p>
                             <p> <b>Authors:</b> {data.mainAuthors} </p>
 
-                            <p> <b>Abstract:</b> {data.mainAbs} </p>
+                            <b>Abstract:</b><div>
+                                        <ShowMoreText
+                                            /* Default options */
+                                            lines={3}
+                                            more={<b>Read more</b>}
+                                            less={<b>Read less</b>}
+                                            className="content-css"
+                                            anchorClass="show-more-less-clickable"
+                                            onClick={executeOnClick}
+                                            expanded={false}
+
+                                            truncatedEndingComponent={"...   "}
+                                        >
+                                            {data.mainAbs}
+                                        </ShowMoreText>
+                                    </div>
                         </div>
                     </Accordion.Body>
                 </Accordion.Item>
@@ -506,7 +525,7 @@ function ContentView({ order, uid, ct, pid }) {
         else {
             return (
                 <div>
-                    <Accordion alwaysOpen>
+                    <Accordion defaultActiveKey={"0"} alwaysOpen>
                         <Accordion.Item eventKey="0" onClick={(e) => handleClick(active)}>
                             <Accordion.Header>Information about the cited publication</Accordion.Header>
                             <Accordion.Body>
@@ -514,8 +533,23 @@ function ContentView({ order, uid, ct, pid }) {
                                     <p> <b>Publication Reference:</b> {data.mla_citation} </p>
                                     <p> <b>Title:</b> {data.mainTitle} </p>
                                     <p> <b>Authors:</b> {data.mainAuthors} </p>
+                                    <b>Abstract:</b><div>
+                                        <ShowMoreText
+                                            /* Default options */
+                                            lines={3}
+                                            more={<b>Read more</b>}
+                                            less={<b>Read less</b>}
+                                            className="content-css"
+                                            anchorClass="show-more-less-clickable"
+                                            onClick={executeOnClick}
+                                            expanded={false}
 
-                                    <p> <b>Abstract:</b> {data.mainAbs} </p>
+                                            truncatedEndingComponent={"...   "}
+                                        >
+                                            {data.mainAbs}
+                                        </ShowMoreText>
+                                    </div>
+
                                 </div>
                             </Accordion.Body>
                         </Accordion.Item>
@@ -548,7 +582,7 @@ function ContentView({ order, uid, ct, pid }) {
         else {
             return (
                 <div>
-                    <Accordion alwaysOpen>
+                    <Accordion defaultActiveKey={"1"} alwaysOpen>
                         <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
                             <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
                             <Accordion.Body>
@@ -584,7 +618,7 @@ function ContentView({ order, uid, ct, pid }) {
         else {
             return (
                 <div>
-                    <Accordion alwaysOpen>
+                    <Accordion defaultActiveKey={"2"} alwaysOpen>
                         <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
                             <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
                             <Accordion.Body>
