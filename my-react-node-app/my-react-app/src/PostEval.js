@@ -47,6 +47,7 @@ import ShowMoreText from "react-show-more-text";
 import Swal from 'sweetalert2';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import Button from 'react-bootstrap/Button';
 
 
 const tempURL = process.env.REACT_APP_NODE_URL_R;
@@ -487,9 +488,9 @@ function ContentView({ order, uid, ct, pid }) {
             sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'metadata', 'state': ekey, 'post_id': mdata.posts[lMainOrd[postIdx]].title });
             active ? setActive(false) : setActive(true);
         };
-
-        function executeOnClick(isExpanded) {
-            console.log(isExpanded);
+        
+        function executeOnClick() {
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'metadata_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
         };
         if (visibleRT) {
             return (<Accordion alwaysOpen>
@@ -504,13 +505,14 @@ function ContentView({ order, uid, ct, pid }) {
                             <b>Abstract:</b><div>
                                         <ShowMoreText
                                             /* Default options */
-                                            lines={3}
-                                            more={<b>Read more</b>}
-                                            less={<b>Read less</b>}
+                                            lines={1}
+                                            more={<b style={{cursor: "pointer"}}>Read more</b>}
+                                            less={<b style={{cursor: "pointer"}}>Read less</b>}
                                             className="content-css"
                                             anchorClass="show-more-less-clickable"
                                             onClick={executeOnClick}
                                             expanded={false}
+                                            
 
                                             truncatedEndingComponent={"...   "}
                                         >
@@ -536,13 +538,14 @@ function ContentView({ order, uid, ct, pid }) {
                                     <b>Abstract:</b><div>
                                         <ShowMoreText
                                             /* Default options */
-                                            lines={3}
-                                            more={<b>Read more</b>}
-                                            less={<b>Read less</b>}
+                                            lines={1}
+                                            more={<b style={{cursor: "pointer"}}>Read more</b>}
+                                            less={<b style={{cursor: "pointer"}}>Read less</b>}
                                             className="content-css"
                                             anchorClass="show-more-less-clickable"
                                             onClick={executeOnClick}
                                             expanded={false}
+                                            
 
                                             truncatedEndingComponent={"...   "}
                                         >
@@ -568,13 +571,33 @@ function ContentView({ order, uid, ct, pid }) {
             active ? setActive(false) : setActive(true);
         };
 
+        function executeOnClick() {
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'mention_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
+        };
+
         if (visibleRT) {
             return (<Accordion alwaysOpen>
                 <Accordion.Item eventKey="1" onClick={(e) => handleClick(active)}>
                     <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
                     <Accordion.Body>
                         <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                        <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
+                        <p> <b>Relevant Quote:</b><div>
+                                        <ShowMoreText
+                                            /* Default options */
+                                            lines={1}
+                                            more={<b style={{cursor: "pointer"}}>Read more</b>}
+                                            less={<b style={{cursor: "pointer"}}>Read less</b>}
+                                            className="content-css"
+                                            anchorClass="show-more-less-clickable"
+                                            onClick={executeOnClick}
+                                            expanded={false}
+
+                                            truncatedEndingComponent={"...   "}
+                                        >
+                                            {data.mentionInPaper} 
+                                        </ShowMoreText>
+                                    </div>
+                        </p>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>);
@@ -587,7 +610,23 @@ function ContentView({ order, uid, ct, pid }) {
                             <Accordion.Header>Relevant quote from the cited publication</Accordion.Header>
                             <Accordion.Body>
                                 <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                                <p> <b>Relevant Quote:</b> {data.mentionInPaper} </p>
+                                <p> <b>Relevant Quote:</b><div>
+                                        <ShowMoreText
+                                            /* Default options */
+                                            lines={1}
+                                            more={<b style={{cursor: "pointer"}}>Read more</b>}
+                                            less={<b style={{cursor: "pointer"}}>Read less</b>}
+                                            className="content-css"
+                                            anchorClass="show-more-less-clickable"
+                                            onClick={executeOnClick}
+                                            expanded={false}
+
+                                            truncatedEndingComponent={"...   "}
+                                        >
+                                            {data.mentionInPaper} 
+                                        </ShowMoreText>
+                                    </div>
+                        </p>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
@@ -604,13 +643,34 @@ function ContentView({ order, uid, ct, pid }) {
             sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'ai_sum', 'state': ekey, 'post_id': mdata.posts[lMainOrd[postIdx]].title });
             active ? setActive(false) : setActive(true);
         };
+
+        function executeOnClick() {
+            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'ai_sum_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
+        };
+
         if (visibleRT) {
             return (<Accordion alwaysOpen>
                 <Accordion.Item eventKey="2" onClick={(e) => handleClick(active)}>
                     <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
                     <Accordion.Body>
                         <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                        <p> <b>Summary:</b> {data.extSummaryMention} </p>
+                        <p> <b>Summary:</b><div>
+                                        <ShowMoreText
+                                            /* Default options */
+                                            lines={1}
+                                            more={<b style={{cursor: "pointer"}}>Read more</b>}
+                                            less={<b style={{cursor: "pointer"}}>Read less</b>}
+                                            className="content-css"
+                                            anchorClass="show-more-less-clickable"
+                                            onClick={executeOnClick}
+                                            expanded={false}
+
+                                            truncatedEndingComponent={"...   "}
+                                        >
+                                            {data.extSummaryMention} 
+                                        </ShowMoreText>
+                                    </div>
+                        </p>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>);
@@ -623,7 +683,24 @@ function ContentView({ order, uid, ct, pid }) {
                             <Accordion.Header>AI generated summary of the cited publication</Accordion.Header>
                             <Accordion.Body>
                                 <p> <b>Publication Reference:</b> {data.mla_citation} </p>
-                                <p> <b>Summary:</b> {data.extSummaryMention} </p>
+                                <p> <b>Summary:</b><div>
+                                        <ShowMoreText
+                                            /* Default options */
+                                            lines={1}
+                                            more={<b style={{cursor: "pointer"}}>Read more</b>}
+                                            less={<b style={{cursor: "pointer"}}>Read less</b>}
+                                            className="content-css"
+                                            anchorClass="show-more-less-clickable"
+                                            onClick={executeOnClick}
+                                            expanded={false}
+
+                                            truncatedEndingComponent={"...   "}
+                                        >
+                                            {data.extSummaryMention} 
+                                        </ShowMoreText>
+                                    </div>
+                        </p>
+                                
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
