@@ -245,6 +245,7 @@ function ContentView({ order, uid, ct, pid }) {
             axios.post(tempURL, { 'type': 'result_f', 'uid': uid, 'ct': ct, 'pid': pid, 'data': f_data })
                 .then((response) => {
                     console.log(response);
+                    window.location.replace(redirectUrl);
                 }, (error) => {
                     console.log(error);
                 });
