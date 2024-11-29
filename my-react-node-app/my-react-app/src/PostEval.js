@@ -72,7 +72,7 @@ function ContentView({ order, uid, ct, pid }) {
     const [init, setInit] = useState(true);
     const [init2, setInit2] = useState(false);
     if (init) {
-        sendMessage({ 'type': 'begin', 'uid': uid, 'ct': ct, 'pid': pid });
+        sendMessage({ 'type': 'begin', 'uid': uid, 'ct': ct, 'pid': pid, 'order': order});
         setInit(false);
         setInit2(true);
 
