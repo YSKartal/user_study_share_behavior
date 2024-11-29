@@ -68,11 +68,13 @@ function ContentView({ order, uid, ct, pid }) {
     const instr_4 = "Imagine you are an active social media user, i.e., you use social media platforms in your daily life interactively and you like to share content with your social circle. Your social circle consists of many people who are interested in various topics, especially in Biomedical and Clinical Sciences, Biological Sciences, Health Sciences, and Psychology. On this page, you will find your timeline.";
     // const tempURL = 'https://localhost:3001/register/';
     const redirectUrl = 'https://www.soscisurvey.de/user-study-smsi/index.php?i=' + ct;
-
+ var er = 0;
     const [init, setInit] = useState(true);
+    const [init2, setInit2] = useState(false);
     if (init) {
         sendMessage({ 'type': 'begin', 'uid': uid, 'ct': ct, 'pid': pid });
         setInit(false);
+        setInit2(true);
 
         Swal.fire({
             title: instr_4 + instr_3,
@@ -85,7 +87,7 @@ function ContentView({ order, uid, ct, pid }) {
         Swal.disableButtons();
     }
     useEffect(() => {
-        setTimeout(() => init ? {} : Swal.enableButtons(), 5000);
+        setTimeout(() => init2 ?Swal.enableButtons() : {} , 5000);
     }, []);
 
     var mainOrd = 1;
@@ -138,7 +140,7 @@ function ContentView({ order, uid, ct, pid }) {
             {
                 share: 0,
                 trustRank: 0,
-                shareText: ''
+                shareText: '',
             },
             {
                 share: 0,
@@ -232,12 +234,20 @@ function ContentView({ order, uid, ct, pid }) {
             })
         }
         else {
+            var f_data = {};
             for (var j = 0; j < copiedShopCart.posts.length; j++) {
                 var textV = getValue('textarea_trust_' + j);
                 copiedShopCart.posts[j]['shareText'] = textV;
+                f_data[mdata.posts[lMainOrd[j]].title] = copiedShopCart.posts[j];
             }
             sendMessage({ 'type': 'end', 'ct': ct, 'pid': pid, 'uid': uid });
             //sendMessage({ 'type': 'result', 'uid': uid, 'ct': ct, 'pid': pid, 'data': copiedShopCart });
+            axios.post(tempURL, { 'type': 'result_f', 'uid': uid, 'ct': ct, 'pid': pid, 'data': f_data })
+                .then((response) => {
+                    console.log(response);
+                }, (error) => {
+                    console.log(error);
+                });
             axios.post(tempURL, { 'type': 'result', 'uid': uid, 'ct': ct, 'pid': pid, 'data': copiedShopCart })
                 .then((response) => {
                     console.log(response);
@@ -267,12 +277,8 @@ function ContentView({ order, uid, ct, pid }) {
             console.log(shopCart);
             console.log(btnIdx, uid);
 
-            axios.post(tempURL, shopCart)
-                .then((response) => {
-                    console.log(response);
-                }, (error) => {
-                    console.log(error);
-                });
+            sendMessage({ 'type': 'share', 'uid': uid, 'ct': ct, 'pid': pid, 'index': btnIdx, data: shopCart });
+            
         }
 
         return (
@@ -490,7 +496,7 @@ function ContentView({ order, uid, ct, pid }) {
         };
         
         function executeOnClick() {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'metadata_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
+            sendMessage({ 'type': 'expand', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'metadata_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
         };
         if (visibleRT) {
             return (<Accordion alwaysOpen>
@@ -572,7 +578,7 @@ function ContentView({ order, uid, ct, pid }) {
         };
 
         function executeOnClick() {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'mention_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
+            sendMessage({ 'type': 'expand', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'mention_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
         };
 
         if (visibleRT) {
@@ -645,7 +651,7 @@ function ContentView({ order, uid, ct, pid }) {
         };
 
         function executeOnClick() {
-            sendMessage({ 'type': 'accordion', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'ai_sum_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
+            sendMessage({ 'type': 'expand', 'uid': uid, 'ct': ct, 'pid': pid, 'index': postIdx, 'sub_type': 'ai_sum_expand', 'post_id': mdata.posts[lMainOrd[postIdx]].title });
         };
 
         if (visibleRT) {
@@ -730,7 +736,7 @@ function ContentView({ order, uid, ct, pid }) {
     function SetPost(data, cond, btnIdx) {
 
         function hcLink(post_id) {
-            sendMessage({ 'type': 'post', 'uid': uid, 'ct': ct, 'pid': pid, 'index': btnIdx, 'sub_type': 'mention', 'post_id': post_id, 'detail': 'link_click' });
+            sendMessage({ 'type': 'post', 'uid': uid, 'ct': ct, 'pid': pid, 'index': btnIdx, 'sub_type': 'link_click', 'post_id': post_id });
         };
 
         return (<div key={btnIdx} className=" border border d-grid gap-3" style={{ alignItems: 'flex-start', paddingLeft: "2%", paddingTop: "2%", paddingBottom: "2%", paddingRight: "2%" }}>
